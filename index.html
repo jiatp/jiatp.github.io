@@ -1,0 +1,2603 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Hexo</title>
+
+
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/head.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/head.jpg" alt="Hexo" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/Home">首页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-02-23T16:00:00.000Z">2020-02-24</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/springboot/">springboot</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    8 minutes 读完 (大约 1172 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/02/24/springboot/springboot%E6%95%B4%E5%90%88redis/">springboot整合redis</a>
+            
+        </h1>
+        <div class="content">
+            <p>使用 Java 操作 Redis 的方案很多，Jedis 是目前较为流行的一种方案，除了 Jedis ，还有很多其他解决方案，如下：</p>
+<p><img src="images/springboot/1.png" alt=""></p>
+<p>除了这些方案之外，还有一个使用也相当多的方案，就是 Spring Data Redis。</p>
+<p>在传统的 SSM 中，需要开发者自己来配置 Spring Data Redis ，这个配置比较繁琐，主要配置 3 个东西：连接池、连接器信息以及 key 和 value 的序列化方案。</p>
+<p>在 Spring Boot 中，默认集成的 Redis 就是 Spring Data Redis，默认底层的连接池使用了 lettuce ，开发者可以自行修改为自己的熟悉的，例如 Jedis。</p>
+<p>Spring Data Redis 针对 Redis 提供了非常方便的操作模板 RedisTemplate 。这是 Spring Data 擅长的事情，那么接下来我们就来看看 Spring Boot 中 Spring Data Redis 的具体用法。</p>
+<h1 id="方案一：Spring-Data-Redis"><a href="#方案一：Spring-Data-Redis" class="headerlink" title="方案一：Spring Data Redis"></a>方案一：Spring Data Redis</h1><h2 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h2><p>创建工程，引入 Redis 依赖：</p>
+<p><img src="images/springboot/3.png" alt=""></p>
+<p>创建成功后，还需要手动引入 commos-pool2 的依赖，因此最终完整的 pom.xml 依赖如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-starter-data-redis&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-starter-web&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;&#x2F;dependencies&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.apache.commons&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;commons-pool2&lt;&#x2F;artifactId&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这里主要就是引入了 Spring Data Redis + 连接池。</p>
+<h2 id="配置-Redis-信息"><a href="#配置-Redis-信息" class="headerlink" title="配置 Redis 信息"></a>配置 Redis 信息</h2><p>接下来配置 Redis 的信息，信息包含两方面，一方面是 Redis 的基本信息，另一方面则是连接池信息:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">spring.redis.database&#x3D;0</span><br><span class="line">spring.redis.password&#x3D;123</span><br><span class="line">spring.redis.port&#x3D;6379</span><br><span class="line">spring.redis.host&#x3D;192.168.66.128</span><br><span class="line">spring.redis.lettuce.pool.min-idle&#x3D;5</span><br><span class="line">spring.redis.lettuce.pool.max-idle&#x3D;10</span><br><span class="line">spring.redis.lettuce.pool.max-active&#x3D;8</span><br><span class="line">spring.redis.lettuce.pool.max-wait&#x3D;1ms</span><br><span class="line">spring.redis.lettuce.shutdown-timeout&#x3D;100ms</span><br></pre></td></tr></table></figure>
+
+<h2 id="自动配置"><a href="#自动配置" class="headerlink" title="自动配置"></a>自动配置</h2><p>当开发者在项目中引入了 Spring Data Redis ，并且配置了 Redis 的基本信息，此时，自动化配置就会生效。</p>
+<p>我们从 Spring Boot 中 Redis 的自动化配置类中就可以看出端倪：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@ConditionalOnClass(RedisOperations.class)</span><br><span class="line">@EnableConfigurationProperties(RedisProperties.class)</span><br><span class="line">@Import(&#123; LettuceConnectionConfiguration.class, JedisConnectionConfiguration.class &#125;)</span><br><span class="line">public class RedisAutoConfiguration &#123;</span><br><span class="line">        @Bean</span><br><span class="line">        @ConditionalOnMissingBean(name &#x3D; &quot;redisTemplate&quot;)</span><br><span class="line">        public RedisTemplate&lt;Object, Object&gt; redisTemplate(</span><br><span class="line">                        RedisConnectionFactory redisConnectionFactory) throws UnknownHostException &#123;</span><br><span class="line">                RedisTemplate&lt;Object, Object&gt; template &#x3D; new RedisTemplate&lt;&gt;();</span><br><span class="line">                template.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">                return template;</span><br><span class="line">        &#125;</span><br><span class="line">        @Bean</span><br><span class="line">        @ConditionalOnMissingBean</span><br><span class="line">        public StringRedisTemplate stringRedisTemplate(</span><br><span class="line">                        RedisConnectionFactory redisConnectionFactory) throws UnknownHostException &#123;</span><br><span class="line">                StringRedisTemplate template &#x3D; new StringRedisTemplate();</span><br><span class="line">                template.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">                return template;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个自动化配置类很好理解：</p>
+<ol>
+<li>首先标记这个是一个配置类，同时该配置在 RedisOperations 存在的情况下才会生效(即项目中引入了 Spring Data Redis)</li>
+<li>然后导入在 application.properties 中配置的属性</li>
+<li>然后再导入连接池信息（如果存在的话）</li>
+<li>最后，提供了两个 Bean ，RedisTemplate 和 StringRedisTemplate ，其中  StringRedisTemplate 是 RedisTemplate  的子类，两个的方法基本一致，不同之处主要体现在操作的数据类型不同，RedisTemplate 中的两个泛型都是 Object ，意味者存储的  key 和 value 都可以是一个对象，而 StringRedisTemplate 的 两个泛型都是 String ，意味者  StringRedisTemplate 的 key 和 value 都只能是字符串。如果开发者没有提供相关的 Bean  ，这两个配置就会生效，否则不会生效。</li>
+</ol>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>接下来，可以直接在 Service 中注入 StringRedisTemplate 或者 RedisTemplate 来使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@Service</span><br><span class="line">public class HelloService &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    RedisTemplate redisTemplate;</span><br><span class="line">    public void hello() &#123;</span><br><span class="line">        ValueOperations ops &#x3D; redisTemplate.opsForValue();</span><br><span class="line">        ops.set(&quot;k1&quot;, &quot;v1&quot;);</span><br><span class="line">        Object k1 &#x3D; ops.get(&quot;k1&quot;);</span><br><span class="line">        System.out.println(k1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Redis 中的数据操作，大体上来说，可以分为两种：</p>
+<ol>
+<li>针对 key 的操作，相关的方法就在 RedisTemplate 中</li>
+<li>针对具体数据类型的操作，相关的方法需要首先获取对应的数据类型，获取相应数据类型的操作方法是 opsForXXX</li>
+</ol>
+<p>调用该方法就可以将数据存储到 Redis 中去了，如下：</p>
+<p><img src="images/springboot/2.png" alt=""></p>
+<p>k1 前面的字符是由于使用了 RedisTemplate 导致的，RedisTemplate 对 key 进行序列化之后的结果。</p>
+<p>RedisTemplate 中，key 默认的序列化方案是 JdkSerializationRedisSerializer 。</p>
+<p>而在  StringRedisTemplate 中，key 默认的序列化方案是 StringRedisSerializer ，因此，如果使用 StringRedisTemplate ，默认情况下 key 前面不会有前缀。</p>
+<p>不过开发者也可以自行修改 RedisTemplate 中的序列化方案，如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    RedisTemplate redisTemplate;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">hello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        redisTemplate.setKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        ValueOperations ops = redisTemplate.opsForValue();</span><br><span class="line">        ops.set(<span class="string">"k1"</span>, <span class="string">"v1"</span>);</span><br><span class="line">        Object k1 = ops.get(<span class="string">"k1"</span>);</span><br><span class="line">        System.out.println(k1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当然也可以直接使用 StringRedisTemplate：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    StringRedisTemplate stringRedisTemplate;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">hello2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ValueOperations ops = stringRedisTemplate.opsForValue();</span><br><span class="line">        ops.set(<span class="string">"k2"</span>, <span class="string">"v2"</span>);</span><br><span class="line">        Object k1 = ops.get(<span class="string">"k2"</span>);</span><br><span class="line">        System.out.println(k1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>另外需要注意 ，Spring Boot 的自动化配置，只能配置单机的 Redis ，如果是 Redis 集群，则所有的东西都需要自己手动配置，关于如何操作 Redis 集群，松哥以后再来和大家分享。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-02-23T13:46:12.000Z">2020-02-23</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/elasticsearch/">elasticsearch</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    an hour 读完 (大约 13020 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/02/23/elasticsearch/elasticsearch/">elasticsearch全文搜索</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="一、ElasticSearch简介"><a href="#一、ElasticSearch简介" class="headerlink" title="一、ElasticSearch简介"></a>一、ElasticSearch简介</h2><h3 id="1-1、Elasticsearch"><a href="#1-1、Elasticsearch" class="headerlink" title="1.1、Elasticsearch"></a>1.1、Elasticsearch</h3><p>Elasticsearch是一个基于<a href="https://lucene.apache.org/core/">Apache Lucene(TM)</a>的开源搜索引擎。无论在开源还是专有领域，Lucene可以被认为是迄今为止最先进、性能最好的、功能最全的搜索引擎库。</p>
+<p><strong>特点：</strong></p>
+<p>l  分布式的实时文件存储，每个字段都被索引并可被搜索</p>
+<p>l  分布式的实时分析搜索引擎–做不规则查询</p>
+<p>l  可以扩展到上百台服务器，处理PB级结构化或非结构化数据</p>
+<p>Elasticsearch也使用Java开发并使用Lucene作为其核心来实现所有索引和搜索的功能，但是它的目的是通过简单的RESTful API来隐藏Lucene的复杂性，从而让全文搜索变得简单。</p>
+<p>ES能做什么？</p>
+<p>全文检索（全部字段）、模糊查询（搜索）、数据分析（提供分析语法，例如聚合）</p>
+<h3 id="1-2、Elasticsearch使用案例"><a href="#1-2、Elasticsearch使用案例" class="headerlink" title="1.2、Elasticsearch使用案例"></a>1.2、Elasticsearch使用案例</h3><p>（1）2013年初，GitHub抛弃了Solr，采取ElasticSearch 来做PB级的搜索。 “GitHub使用ElasticSearch搜索20TB的数据，包括13亿文件和1300亿行代码”</p>
+<p>（2）维基百科：启动以elasticsearch为基础的核心搜索架构SoundCloud：“SoundCloud使用ElasticSearch为1.8亿用户提供即时而精准的音乐搜索服务”</p>
+<p>（3）百度：百度目前广泛使用ElasticSearch作为文本数据分析，采集百度所有服务器上的各类指标数据及用户自定义数据，通过对各种数据进行多维分析展示，辅助定位分析实例异常或业务层面异常。目前覆盖百度内部20多个业务线（包括casio、云分析、网盟、预测、文库、直达号、钱包、风控等），单集群最大100台机器，200个ES节点，每天导入30TB+数据</p>
+<p>（4）新浪使用ES 分析处理32亿条实时日志</p>
+<p>（5）阿里使用ES 构建挖财自己的日志采集和分析体系</p>
+<h3 id="1-3、同类产品"><a href="#1-3、同类产品" class="headerlink" title="1.3、同类产品"></a>1.3、同类产品</h3><p>Solr、ElasticSearch、Hermes（腾讯）（实时检索分析）</p>
+<p>l  Solr、ES</p>
+<p>\1. 源自搜索引擎，侧重搜索与全文检索。</p>
+<p>\2. 数据规模从几百万到千万不等，数据量过亿的集群特别少。</p>
+<p>有可能存在个别系统数据量过亿，但这并不是普遍现象（就像Oracle的表里的数据规模有可能超过Hive里一样，但需要小型机）。</p>
+<p>l  Hermes</p>
+<p>\1. 一个基于大索引技术的海量数据实时检索分析平台。侧重数据分析。</p>
+<p>\2. 数据规模从几亿到万亿不等。最小的表也是千万级别。</p>
+<p>在 腾讯17 台TS5机器，就可以处理每天450亿的数据(每条数据1kb左右)，数据可以保存一个月之久。</p>
+<p>l  Solr、ES区别</p>
+<p>全文检索、搜索、分析。基于lucene</p>
+<p>\1. Solr 利用 Zookeeper 进行分布式管理，而 Elasticsearch 自身带有分布式协调管理功能;</p>
+<p>\2. Solr 支持更多格式的数据，而 Elasticsearch 仅支持json文件格式；</p>
+<p>\3. Solr 官方提供的功能更多，而 Elasticsearch 本身更注重于核心功能，高级功能多有第三方插件提供；</p>
+<p>\4. Solr 在传统的搜索应用中表现好于 Elasticsearch，但在处理实时搜索应用时效率明显低于 Elasticsearch—–附近的人</p>
+<p>Lucene是一个<a href="https://baike.baidu.com/item/开放源代码/114160">开放源代码</a>的全文检索引擎工具包，但它不是一个完整的全文检索引擎，而是一个全文检索引擎的架构，提供了完整的查询引擎和索引引擎，部分<a href="https://baike.baidu.com/item/文本分析/11046544">文本分析</a>引擎</p>
+<p>搜索引擎产品简介</p>
+<h2 id="二、ElasticSearch"><a href="#二、ElasticSearch" class="headerlink" title="二、ElasticSearch"></a>二、ElasticSearch</h2><h3 id="2-1、准备工作"><a href="#2-1、准备工作" class="headerlink" title="2.1、准备工作"></a>2.1、准备工作</h3><p>安装Centos7、建议内存2G以上、安装java1.8环境</p>
+<h3 id="2-2、基本配置"><a href="#2-2、基本配置" class="headerlink" title="2.2、基本配置"></a>2.2、基本配置</h3><p>l  设置IP地址</p>
+<p>vi /etc/sysconfig/network-scripts/ifcfg-ens33</p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image002.jpg" alt="img"></p>
+<p># 网络重置</p>
+<p>service network restart</p>
+<p>l  添加用户</p>
+<p>[root@localhost ~]# adduser elk</p>
+<p>[root@localhost ~]# passwd elk</p>
+<p>以下授权步骤可省略</p>
+<p>[root@localhost ~]# whereis sudoers</p>
+<p>[root@localhost ~]# ls -l /etc/sudoers</p>
+<p>[root@localhost ~]# vi /etc/sudoers</p>
+<p>## Allow root to run any commands anywher  </p>
+<p>root    ALL=(ALL)       ALL  </p>
+<p>linuxidc  ALL=(ALL)       ALL  #这个是新增的用户</p>
+<p>[root@localhost ~]# chmod -v u-w /etc/sudoers</p>
+<p>[root@localhost ~]# su elk</p>
+<h3 id="2-3、Java环境安装"><a href="#2-3、Java环境安装" class="headerlink" title="2.3、Java环境安装"></a>2.3、Java环境安装</h3><p>l  解压安装包</p>
+<p>[root@localhost jdk1.8]# tar -zxvf jdk-8u171-linux-x64.tar.gz</p>
+<p>l  设置Java环境变量</p>
+<p>[root@localhost jdk1.8.0_171]# vi /etc/profile</p>
+<p>在文件最后添加</p>
+<p>export JAVA_HOME=/home/elk1/jdk1.8/jdk1.8.0_171</p>
+<p>export JRE_HOME=$JAVA_HOME/jre</p>
+<p>export CLASSPATH=.:$JAVA_HOME/LIB:$JRE_HOME/LIB:$CLASSPATH</p>
+<p>export PATH=$JAVA_HOME/bin:$JRE_HOME/bin:$PATH</p>
+<p>[root@localhost jdk1.8.0_171]# source /etc/profile</p>
+<p>[root@localhost jdk1.8.0_171]# java -version</p>
+<p>java version “1.8.0_171”</p>
+<p>Java(TM) SE Runtime Environment (build 1.8.0_171-b11)</p>
+<p>Java HotSpot(TM) 64-Bit Server VM (build 25.171-b11, mixed mode)</p>
+<h3 id="2-4、ElasticSerach单机安装"><a href="#2-4、ElasticSerach单机安装" class="headerlink" title="2.4、ElasticSerach单机安装"></a>2.4、ElasticSerach单机安装</h3><p>192.168.14.10     root  elk</p>
+<p>/home/elk/soft</p>
+<p>[root@localhost elasticserach]# tar -zxvf elasticsearch-6.3.1.tar.gz</p>
+<p>[root@localhost elasticserach]# cd elasticsearch-6.3.1/bin</p>
+<p>[root@localhost bin]# ./elasticsearch</p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image004.jpg" alt="img"></p>
+<p>[root@localhost bin]# su elk1</p>
+<p>[elk1@localhost bin]$ ./elasticsearch</p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image006.jpg" alt="img"></p>
+<p>[root@localhost bin]# chown -R elk1:elk1 /home/elk1/elasticsearch</p>
+<p>[elk1@localhost bin]$ ./elasticsearch</p>
+<p>[elk1@localhost config]$ vi jvm.options</p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image008.jpg" alt="img"></p>
+<p>[elk1@localhost bin]$ ./elasticsearch</p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image010.jpg" alt="img"></p>
+<p>[root@localhost jdk1.8.0_171]# curl 127.0.0.1:9200</p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image012.jpg" alt="img"></p>
+<p>#后台启动</p>
+<p>[elk1@localhost bin]$ ./elasticsearch -d</p>
+<p>#关闭程序</p>
+<p>[elk1@localhost bin]$ ps -ef|grep elastic</p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image014.jpg" alt="img"></p>
+<p>[elk1@localhost bin]$ kill 10097</p>
+<p>#设置浏览器访问</p>
+<p>[root@localhost bin]systemctl stop firewalld</p>
+<p>[root@localhost bin]vi config/elasticsearch.yml</p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image016.jpg" alt="img"></p>
+<p>安装问题：</p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image018.jpg" alt="img"></p>
+<p>[1]  [2]解决方案</p>
+<p>[root@localhost bin]# vi /etc/security/limits.conf</p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image020.jpg" alt="img"></p>
+<p>nofile - 打开文件的最大数目</p>
+<p>noproc - 进程的最大数目</p>
+<p>soft 指的是当前系统生效的设置值</p>
+<p>hard 表明系统中所能设定的最大值</p>
+<p>* hard nofile 65536</p>
+<p>* soft nofile 131072</p>
+<p>* hard nproc 4096</p>
+<p>* soft nproc 2048</p>
+<p>[3]  解决方案</p>
+<p>[root@localhost bin]# vi /etc/sysctl.conf</p>
+<p>[root@localhost bin]# sysctl -p</p>
+<p>vm.max_map_count=655360</p>
+<p>fs.file-max=655360</p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image022.jpg" alt="img"></p>
+<p>vm.max_map_count=655360，因此缺省配置下，单个jvm能开启的最大线程数为其一半</p>
+<p>file-max是设置 系统所有进程一共可以打开的文件数量 </p>
+<p># 测试</p>
+<p>Liunx执行： curl ‘<a href="http://localhost:9200/?pretty&#39;">http://localhost:9200/?pretty&#39;</a></p>
+<p>浏览器访问：<a href="http://localhost:9200/?pretty">http://localhost:9200/?pretty</a></p>
+<p># 状态查看命令</p>
+<p>语法：ip:post/_cat/<a href="?v|?format=json&pretty">args</a></p>
+<p>（?v表示显示字段说明,?format=json&amp;pretty表示显示成json格式）</p>
+<p>1、查看所有索引</p>
+<p>GET _cat/indices?v</p>
+<p>2、查看es集群状态</p>
+<p>GET _cat/health?v</p>
+<h3 id="2-5、Elasticsearch的交互方式"><a href="#2-5、Elasticsearch的交互方式" class="headerlink" title="2.5、Elasticsearch的交互方式"></a>2.5、Elasticsearch的交互方式</h3><p>1、基于HTTP协议，以JSON为数据交互格式的RESTful API</p>
+<p>GET POST PUT DELETE HEAD</p>
+<p>2、Elasticsearch官方提供了多种程序语言的客户端—java，Javascript，.NET，PHP，Perl，Python，以及 Ruby——还有很多由社区提供的客户端和插件</p>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/client/java-rest/6.3/java-rest-high-getting-started-maven.html">https://www.elastic.co/guide/en/elasticsearch/client/java-rest/6.3/java-rest-high-getting-started-maven.html</a></p>
+<h3 id="2-6、Elasticsearch操作工具"><a href="#2-6、Elasticsearch操作工具" class="headerlink" title="2.6、Elasticsearch操作工具"></a>2.6、Elasticsearch操作工具</h3><p>l  REST访问ES方式（需要Http Method、URI）</p>
+<p>\1.       浏览器（postman）</p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image024.jpg" alt="img"></p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image026.jpg" alt="img"></p>
+<p>\2.       Linux命令行</p>
+<p><strong>请求：</strong></p>
+<p>[root@localcurl -XPOST ‘<a href="http://192.168.14.12:9200/atguig/doc&#39;">http://192.168.14.12:9200/atguig/doc&#39;</a> -i -H </p>
+<p>“Content-Type:application/json” -d</p>
+<p>‘{“name”:”haha”,”age”:”10”}’</p>
+<p><strong>响应：</strong></p>
+<p>HTTP/1.1 201 Created</p>
+<p>Location: /atguig/doc/KF_t32QBxRaDZXTftAxg</p>
+<p>content-type: application/json; charset=UTF-8</p>
+<p>content-length: 172</p>
+<p>{“_index”:”atguig”,”_type”:”doc”,”_id”:”KF_t32QBxRaDZXTftAxg”,”_version”:1,”result”: “created”,”_shards”:{“total”:2,”successful”:1,”failed”:0},”_seq_no”:0,”_primary_term”:        1}</p>
+<p>\3.       Kibana的Dev Tools</p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image028.jpg" alt="img"></p>
+<p>\4.       Cerebro插件</p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image030.jpg" alt="img"></p>
+<h3 id="2-7、Elasticsearch数据存储方式-基本概念"><a href="#2-7、Elasticsearch数据存储方式-基本概念" class="headerlink" title="2.7、Elasticsearch数据存储方式(基本概念)"></a>2.7、Elasticsearch数据存储方式(基本概念)</h3><h4 id="2-7-1、Elasticsearch存储方式"><a href="#2-7-1、Elasticsearch存储方式" class="headerlink" title="2.7.1、Elasticsearch存储方式"></a>2.7.1、Elasticsearch存储方式</h4><p>（1）面向文档</p>
+<p>Elasticsearch是面向文档(document oriented)的，这意味着它可以存储整个对象或文档(document)。然而它不仅仅是存储，还会索引(index)每个文档的内容使之可以被搜索。在Elasticsearch中，你可以对文档（而非成行成列的数据）进行索引、搜索、排序、过滤。这种理解数据的方式与以往完全不同，这也是Elasticsearch能够执行复杂的全文搜索的原因之一。</p>
+<p>（2）JSON</p>
+<p>ELasticsearch使用Javascript对象符号(JavaScript Object Notation)，也就是<a href="http://en.wikipedia.org/wiki/Json">JSON</a>，作为文档序列化格式。JSON现在已经被大多语言所支持，而且已经成为NoSQL领域的标准格式。它简洁、简单且容易阅读。</p>
+<p>以下使用JSON文档来表示一个用户对象：</p>
+<p>{</p>
+<p>​    “email”:      “<a href="mailto:john@smith.com">john@smith.com</a>“,</p>
+<p>​    “first_name”: “John”,</p>
+<p>​    “last_name”:  “Smith”,</p>
+<p>​    “info”: {</p>
+<p>​        “bio”:         “Eco-warrior and defender of the weak”,</p>
+<p>​        “age”:         25,</p>
+<p>​        “interests”: [ “dolphins”, “whales” ]</p>
+<p>​    },</p>
+<p>​    “join_date”: “2014/05/01”</p>
+<p>}</p>
+<p>尽管原始的user对象很复杂，但它的结构和对象的含义已经被完整的体现在JSON中了，在Elasticsearch中将对象转化为JSON并做索引要比在表结构中做相同的事情简单的多。</p>
+<h4 id="2-7-2、Elasticsearch存储结构"><a href="#2-7-2、Elasticsearch存储结构" class="headerlink" title="2.7.2、Elasticsearch存储结构"></a>2.7.2、Elasticsearch存储结构</h4><p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image032.jpg" alt="img"></p>
+<p>Mysql数据与ES数据转化</p>
+<p>（1）元数据</p>
+<p>创建文档语句</p>
+<p>PUT atguigu/doc</p>
+<p>{</p>
+<p>“name”:”zhangsan”,</p>
+<p>“age”:10</p>
+<p>}</p>
+<p>_index:文档所在索引名称</p>
+<p>_type:文档所在类型名称</p>
+<p>_id:文档唯一id</p>
+<p>_uid:组合id，由_type和_id组成（6.x后，_type不再起作用，同_id）</p>
+<p>_source:文档的原始Json数据，包括每个字段的内容</p>
+<p>_all:将所有字段内容整合起来，默认禁用（用于对所有字段内容检索）</p>
+<p>（2）名词解释</p>
+<p>l  索引 index</p>
+<p>一个索引就是一个拥有几分相似特征的文档的集合。比如说，你可以有一个客户数据的索引，另一个产品目录的索引，还有一个订单数据的索引。一个索引由一个名字来标识（必须全部是小写字母的），并且当我们要对对应于这个索引中的文档进行索引、搜索、更新和删除的时候，都要使用到这个名字。在一个集群中，可以定义任意多的索引。</p>
+<p>l  类型 type</p>
+<p>Es6之后，一个index中只能有一个type</p>
+<p>在一个索引中，你可以定义一种或多种类型。一个类型是你的索引的一个逻辑上的分类/分区，其语义完全由你来定。通常，会为具有一组共同字段的文档定义一个类型。比如说，我们假设你运营一个博客平台并且将你所有的数据存储到一个索引中。在这个索引中，你可以为用户数据定义一个类型，为博客数据定义另一个类型，当然，也可以为评论数据定义另一个类型。</p>
+<p>l  字段Field</p>
+<p>相当于是数据表的字段，对文档数据根据不同属性进行的分类标识</p>
+<p>l  document</p>
+<p>一个文档是一个可被索引的基础信息单元。比如，你可以拥有某一个客户的文档，某一个产品的一个文档，当然，也可以拥有某个订单的一个文档。文档以JSON（Javascript Object Notation）格式来表示，而JSON是一个到处存在的互联网数据交互格式。在一个index/type里面，你可以存储任意多的文档。注意，尽管一个文档，物理上存在于一个索引之中，文档必须被索引/赋予一个索引的type。</p>
+<h3 id="2-8、Elasticsearch检索"><a href="#2-8、Elasticsearch检索" class="headerlink" title="2.8、Elasticsearch检索"></a>2.8、Elasticsearch检索</h3><h4 id="2-8-1、检索文档"><a href="#2-8-1、检索文档" class="headerlink" title="2.8.1、检索文档"></a>2.8.1、检索文档</h4><p>Mysql : select * from user where id = 1</p>
+<p>ES : GET /atguigu/doc/1</p>
+<p>响应：</p>
+<p>{</p>
+<p>  “_index” :   “megacorp”,</p>
+<p>  “_type” :    “employee”,</p>
+<p>  “_id” :      “1”,</p>
+<p>  “_version” : 1,</p>
+<p>  “found” :    true,</p>
+<p>  “_source” :  {</p>
+<p>​      “first_name” :  “John”,</p>
+<p>​      “last_name” :   “Smith”,</p>
+<p>​      “age” :         25,</p>
+<p>​      “about” :       “I love to go rock climbing”,</p>
+<p>​      “interests”:  [ “sports”, “music” ]</p>
+<p>  }</p>
+<p>}</p>
+<p>我们通过HTTP方法GET来检索文档，同样的，我们可以使用DELETE方法删除文档，使用HEAD方法检查某文档是否存在。如果想更新已存在的文档，我们只需再PUT一次。</p>
+<h4 id="2-8-2、简单检索"><a href="#2-8-2、简单检索" class="headerlink" title="2.8.2、简单检索"></a>2.8.2、简单检索</h4><p>Mysql : select * from user</p>
+<p>ES : GET /megacorp/employee/_search</p>
+<p>响应内容不仅会告诉我们哪些文档被匹配到，而且这些文档内容完整的被包含在其中—我们在给用户展示搜索结果时需要用到的所有信息都有了。</p>
+<h4 id="2-8-3、全文检索"><a href="#2-8-3、全文检索" class="headerlink" title="2.8.3、全文检索"></a>2.8.3、全文检索</h4><p>ES : GET /megacorp/employee/_search?q=haha</p>
+<p>查询出所有文档字段值为haha的文档</p>
+<h4 id="2-8-4、搜索（模糊查询）"><a href="#2-8-4、搜索（模糊查询）" class="headerlink" title="2.8.4、搜索（模糊查询）"></a>2.8.4、搜索（模糊查询）</h4><p>ES : GET /megacorp/employee/_search?q=hello</p>
+<p>查询出所有文档字段值分词后包含hello的文档</p>
+<h4 id="2-8-5、聚合"><a href="#2-8-5、聚合" class="headerlink" title="2.8.5、聚合"></a>2.8.5、聚合</h4><p>PUT atguigu/_mapping/doc</p>
+<p>{ </p>
+<p>  “properties”: { </p>
+<p>​    “interests”: { </p>
+<p>​      “type”: “text”, </p>
+<p>​      “fielddata”: true </p>
+<p>​      } </p>
+<p>  }</p>
+<p>}</p>
+<p>Group by</p>
+<p>Elasticsearch有一个功能叫做聚合(aggregations)，它允许你在数据上生成复杂的分析统计。它很像SQL中的GROUP BY但是功能更强大。</p>
+<p>举个例子，让我们找到所有职员中最大的共同点（兴趣爱好）是什么：</p>
+<p>GET /atguigu/doc/_search</p>
+<p>{</p>
+<p>  “aggs”: {</p>
+<p>​    “all_interests”: {</p>
+<p>​      “terms”: { “field”: “interests” }</p>
+<p>​    }</p>
+<p>  }</p>
+<p>}</p>
+<p>暂时先忽略语法只看查询结果：</p>
+<p>{</p>
+<p>   …</p>
+<p>   “hits”: { … },</p>
+<p>   “aggregations”: {</p>
+<p>​      “all_interests”: {</p>
+<p>​         “buckets”: [</p>
+<p>​            {</p>
+<p>​               “key”:       “music”,</p>
+<p>​               “doc_count”: 2</p>
+<p>​            },</p>
+<p>​            {</p>
+<p>​               “key”:       “forestry”,</p>
+<p>​               “doc_count”: 1</p>
+<p>​            },</p>
+<p>​            {</p>
+<p>​               “key”:       “sports”,</p>
+<p>​               “doc_count”: 1</p>
+<p>​            }</p>
+<p>​         ]</p>
+<p>​      }</p>
+<p>   }</p>
+<p>}</p>
+<p>我们可以看到两个职员对音乐有兴趣，一个喜欢林学，一个喜欢运动。这些数据并没有被预先计算好，它们是实时的从匹配查询语句的文档中动态计算生成的。如果我们想知道所有姓”Smith”的人最大的共同点（兴趣爱好），我们只需要增加合适的语句既可：</p>
+<p>GET /atguigu/doc/_search</p>
+<p>{</p>
+<p>  “query”: {</p>
+<p>​    “match”: {</p>
+<p>​      “last_name”: “smith”</p>
+<p>​    }</p>
+<p>  },</p>
+<p>  “aggs”: {</p>
+<p>​    “all_interests”: {</p>
+<p>​      “terms”: {</p>
+<p>​        “field”: “interests”</p>
+<p>​      }</p>
+<p>​    }</p>
+<p>  }</p>
+<p>}</p>
+<p>all_interests聚合已经变成只包含和查询语句相匹配的文档了：</p>
+<p>  …</p>
+<p>  “all_interests”: {</p>
+<p>​     “buckets”: [</p>
+<p>​        {</p>
+<p>​           “key”: “music”,</p>
+<p>​           “doc_count”: 2</p>
+<p>​        },</p>
+<p>​        {</p>
+<p>​           “key”: “sports”,</p>
+<p>​           “doc_count”: 1</p>
+<p>​        }</p>
+<p>​     ]</p>
+<p>  }</p>
+<p>PUT atguigu/_mapping/doc/</p>
+<p>{</p>
+<p>  “properties”: {</p>
+<p>​    “interests”: { </p>
+<p>​      “type”:     “text”,</p>
+<p>​      “fielddata”: true</p>
+<p>​    }</p>
+<p>  }</p>
+<p>}</p>
+<h3 id="2-9、Elasticsearch搜索原理"><a href="#2-9、Elasticsearch搜索原理" class="headerlink" title="2.9、Elasticsearch搜索原理"></a>2.9、Elasticsearch搜索原理</h3><p><a href="https://www.cs.usfca.edu/~galles/visualization/Algorithms.html">https://www.cs.usfca.edu/~galles/visualization/Algorithms.html</a></p>
+<h4 id="2-9-1、正排索引和倒排索引"><a href="#2-9-1、正排索引和倒排索引" class="headerlink" title="2.9.1、正排索引和倒排索引"></a>2.9.1、正排索引和倒排索引</h4><p>l  正排索引</p>
+<p>记录文档Id到文档内容、单词的关联关系</p>
+<p>尚硅谷：1，3</p>
+<p>l  倒排索引</p>
+<p>记录单词到文档id的关联关系，包含：</p>
+<p>单词词典（Term DicTionary）：记录所有文档的单词，一般比较大</p>
+<p>倒排索引（Posting List）：记录单词倒排列表的关联信息</p>
+<p>例如：尚硅谷</p>
+<p>1、Term Dictionary</p>
+<p>尚硅谷</p>
+<p>2、Posting List</p>
+<p>DocId：文档id，文档的原始信息</p>
+<p>TF：单词频率，记录该词再文档中出现的次数，用于后续相关性算分</p>
+<p>Position：位置，记录Field分词后，单词所在的位置，从0开始</p>
+<p>Offset：偏移量，记录单词在文档中开始和结束位置，用于高亮显示等</p>
+<p>3、内存结构</p>
+<p><a href="https://www.cs.usfca.edu/~galles/visualization/Algorithms.html">https://www.cs.usfca.edu/~galles/visualization/Algorithms.html</a> </p>
+<p>B+Tree</p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image034.jpg" alt="img"></p>
+<p>每个文档字段都有自己的倒排索引</p>
+<h4 id="2-9-2、分词"><a href="#2-9-2、分词" class="headerlink" title="2.9.2、分词"></a>2.9.2、分词</h4><p>分词是指将文本转换成一系列单词（term or token）的过程，也可以叫做文本分析，在es里面称为Analysis</p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image036.jpg" alt="img"></p>
+<p>l  分词机制</p>
+<table>
+<thead>
+<tr>
+<th>Character   Filter</th>
+<th>对原始文本进行处理</th>
+<th>例：去除html标签、特殊字符等</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Tokenizer</td>
+<td>将原始文本进行分词</td>
+<td>例：培训机构–&gt;培训，机构</td>
+</tr>
+<tr>
+<td>Token   Filters</td>
+<td>分词后的关键字进行加工</td>
+<td>例：转小写、删除语气词、近义词和同义词等</td>
+</tr>
+</tbody></table>
+<p>l  分词API</p>
+<p><strong>1、**</strong>直接指定测试（指定分词器）**</p>
+<p>Request:</p>
+<p>POST _analyze</p>
+<p>{</p>
+<p>  “analyzer”: “standard”,</p>
+<p>  “text”:”hello 1111”</p>
+<p>}</p>
+<p>Response:</p>
+<p>{</p>
+<p>  “tokens”: [</p>
+<p>​    {</p>
+<p>​      “token”: “hello”,                          #分词</p>
+<p>​      “start_offset”: 0,                           #开始偏移</p>
+<p>​      “end_offset”: 5,                            #结束偏移</p>
+<p>​      “type”: “<ALPHANUM>“,         #单词类型</p>
+<p>​      “position”: 0                                 #位置</p>
+<p>​    },</p>
+<p>​    {</p>
+<p>​      “token”: “world”,</p>
+<p>​      “start_offset”: 6,</p>
+<p>​      “end_offset”: 11,</p>
+<p>​      “type”: “<NUM>“,</p>
+<p>​      “position”: 1</p>
+<p>​    }</p>
+<p>  ]</p>
+<p>}</p>
+<p><strong>2、**</strong>针对索引的字段进行分词测试（利用该字段的分词器）**</p>
+<p>Request：</p>
+<p>POST atguigu/_analyze</p>
+<p>{</p>
+<p>  “field”: “name”,</p>
+<p>  “text”:”hello world”</p>
+<p>}</p>
+<p>Response:</p>
+<p>{</p>
+<p>  “tokens”: [</p>
+<p>​    {</p>
+<p>​      “token”: “hello”,</p>
+<p>​      “start_offset”: 0,</p>
+<p>​      “end_offset”: 5,</p>
+<p>​      “type”: “<ALPHANUM>“,</p>
+<p>​      “position”: 0</p>
+<p>​    },</p>
+<p>​    {</p>
+<p>​      “token”: “world”,</p>
+<p>​      “start_offset”: 6,</p>
+<p>​      “end_offset”: 11,</p>
+<p>​      “type”: “<ALPHANUM>“,</p>
+<p>​      “position”: 1</p>
+<p>​    }</p>
+<p>  ]</p>
+<p>}</p>
+<p>3、自定义分词器</p>
+<p>Request:</p>
+<p>POST _analyze</p>
+<p>{</p>
+<p>  “tokenizer”: “standard”,</p>
+<p>  “filter”: [“lowercase”],</p>
+<p>  “text”:”Hello WORLD”</p>
+<p>}</p>
+<p>Response:</p>
+<p>{</p>
+<p>  “tokens”: [</p>
+<p>​    {</p>
+<p>​      “token”: “hello”,</p>
+<p>​      “start_offset”: 0,</p>
+<p>​      “end_offset”: 5,</p>
+<p>​      “type”: “<ALPHANUM>“,</p>
+<p>​      “position”: 0</p>
+<p>​    },</p>
+<p>​    {</p>
+<p>​      “token”: “world”,</p>
+<p>​      “start_offset”: 6,</p>
+<p>​      “end_offset”: 11,</p>
+<p>​      “type”: “<ALPHANUM>“,</p>
+<p>​      “position”: 1</p>
+<p>​    }</p>
+<p>  ]</p>
+<p>} </p>
+<p>l  Elasticsearch自带的分词器</p>
+<p>l  中文分词</p>
+<p>l  Character Filters</p>
+<p>在进行Tokenizer之前对原始文本进行处理，如增加、删除或替换字符等</p>
+<p>注意：进行处理后，会影响后续tokenizer解析的position和offset</p>
+<p>Request：</p>
+<p>POST _analyze</p>
+<p>{</p>
+<p>  “tokenizer”: “keyword”,</p>
+<p>  “char_filter”: [“html_strip”],</p>
+<p>  “text”:”<div><h1>B<sup>+</sup>Trees</h1></div>“</p>
+<p>}</p>
+<p>Response:</p>
+<p>{</p>
+<p>  “tokens”: [</p>
+<p>​    {</p>
+<p>​      “token”: “””</p>
+<p>B+Trees</p>
+<p>“””,</p>
+<p>​      “start_offset”: 0,</p>
+<p>​      “end_offset”: 38,</p>
+<p>​      “type”: “word”,</p>
+<p>​      “position”: 0</p>
+<p>​    }</p>
+<p>  ]</p>
+<p>}</p>
+<p>l  Token Filter</p>
+<p>对输出的单词（term）进行增加、删除、修改等操作</p>
+<p>Request:</p>
+<p>POST _analyze</p>
+<p>{</p>
+<p>  “tokenizer”: “standard”,</p>
+<p>  “text”:”a Hello World”,</p>
+<p>  “filter”: [</p>
+<p>​      “stop”,</p>
+<p>​      “lowercase”,</p>
+<p>​      {</p>
+<p>​        “type”:”ngram”,</p>
+<p>​        “min_gram”:3,</p>
+<p>​        “max_gram”:4</p>
+<p>​        </p>
+<p>​      }</p>
+<p>​    ]</p>
+<p>}</p>
+<p>Response:</p>
+<p>{</p>
+<p>  “tokens”: [</p>
+<p>​    {</p>
+<p>​      “token”: “hel”,</p>
+<p>​      “start_offset”: 2,</p>
+<p>​      “end_offset”: 7,</p>
+<p>​      “type”: “<ALPHANUM>“,</p>
+<p>​      “position”: 1</p>
+<p>​    },</p>
+<p>​    {</p>
+<p>​      “token”: “hell”,</p>
+<p>​      “start_offset”: 2,</p>
+<p>​      “end_offset”: 7,</p>
+<p>​      “type”: “<ALPHANUM>“,</p>
+<p>​      “position”: 1</p>
+<p>​    },</p>
+<p>​    {</p>
+<p>​      “token”: “ell”,</p>
+<p>​      “start_offset”: 2,</p>
+<p>​      “end_offset”: 7,</p>
+<p>​      “type”: “<ALPHANUM>“,</p>
+<p>​      “position”: 1</p>
+<p>​    },</p>
+<p>​    {</p>
+<p>​      “token”: “ello”,</p>
+<p>​      “start_offset”: 2,</p>
+<p>​      “end_offset”: 7,</p>
+<p>​      “type”: “<ALPHANUM>“,</p>
+<p>​      “position”: 1</p>
+<p>​    },</p>
+<p>​    {</p>
+<p>​      “token”: “llo”,</p>
+<p>​      “start_offset”: 2,</p>
+<p>​      “end_offset”: 7,</p>
+<p>​      “type”: “<ALPHANUM>“,</p>
+<p>​      “position”: 1</p>
+<p>​    },</p>
+<p>​    {</p>
+<p>​      “token”: “wor”,</p>
+<p>​      “start_offset”: 8,</p>
+<p>​      “end_offset”: 13,</p>
+<p>​      “type”: “<ALPHANUM>“,</p>
+<p>​      “position”: 2</p>
+<p>​    },</p>
+<p>​    {</p>
+<p>​      “token”: “worl”,</p>
+<p>​      “start_offset”: 8,</p>
+<p>​      “end_offset”: 13,</p>
+<p>​      “type”: “<ALPHANUM>“,</p>
+<p>​      “position”: 2</p>
+<p>​    },</p>
+<p>​    {</p>
+<p>​      “token”: “orl”,</p>
+<p>​      “start_offset”: 8,</p>
+<p>​      “end_offset”: 13,</p>
+<p>​      “type”: “<ALPHANUM>“,</p>
+<p>​      “position”: 2</p>
+<p>​    },</p>
+<p>​    {</p>
+<p>​      “token”: “orld”,</p>
+<p>​      “start_offset”: 8,</p>
+<p>​      “end_offset”: 13,</p>
+<p>​      “type”: “<ALPHANUM>“,</p>
+<p>​      “position”: 2</p>
+<p>​    },</p>
+<p>​    {</p>
+<p>​      “token”: “rld”,</p>
+<p>​      “start_offset”: 8,</p>
+<p>​      “end_offset”: 13,</p>
+<p>​      “type”: “<ALPHANUM>“,</p>
+<p>​      “position”: 2</p>
+<p>​    }</p>
+<p>  ]</p>
+<p>}</p>
+<p>l  自定义分词api</p>
+<p>Request:</p>
+<p>PUT my_analyzer</p>
+<p>{</p>
+<p>  “settings”: {</p>
+<p>​    “analysis”: {</p>
+<p>​      “analyzer”: {</p>
+<p>​        “my”:{</p>
+<p>​          “tokenizer”:”punctuation”,</p>
+<p>​          “type”:”custom”,</p>
+<p>​          “char_filter”:[“emoticons”],</p>
+<p>​          “filter”:[“lowercase”,”english_stop”]</p>
+<p>​        }</p>
+<p>​      },</p>
+<p>​      “tokenizer”: {</p>
+<p>​        “punctuation”:{</p>
+<p>​          “type”:”pattern”,</p>
+<p>​          “pattern”:”[.,!?]”</p>
+<p>​        }</p>
+<p>​      },</p>
+<p>​      “char_filter”: {</p>
+<p>​        “emoticons”:{</p>
+<p>​          “type”:”mapping”,</p>
+<p>​          “mappings”:[</p>
+<p>​              “:)=&gt;<em>happy</em>“,</p>
+<p>​              “:(=&gt;<em>sad</em>“</p>
+<p>​            ]</p>
+<p>​        }</p>
+<p>​      },</p>
+<p>​      “filter”: {</p>
+<p>​        “english_stop”:{</p>
+<p>​          “type”:”stop”,</p>
+<p>​          “stopwords”:”<em>english</em>“</p>
+<p>​        }</p>
+<p>​      }</p>
+<p>​    }</p>
+<p>  }</p>
+<p>}</p>
+<p>测试：</p>
+<p>POST my_analyzer/_analyze</p>
+<p>{</p>
+<p>  “analyzer”: “my”,</p>
+<p>  “text”:”l’m a :) person,and you?”</p>
+<p>}</p>
+<p>{</p>
+<p>  “tokens”: [</p>
+<p>​    {</p>
+<p>​      “token”: “l’m a <em>happy</em> person”,</p>
+<p>​      “start_offset”: 0,</p>
+<p>​      “end_offset”: 15,</p>
+<p>​      “type”: “word”,</p>
+<p>​      “position”: 0</p>
+<p>​    },</p>
+<p>​    {</p>
+<p>​      “token”: “and you”,</p>
+<p>​      “start_offset”: 16,</p>
+<p>​      “end_offset”: 23,</p>
+<p>​      “type”: “word”,</p>
+<p>​      “position”: 1</p>
+<p>​    }</p>
+<p>  ]</p>
+<p>}</p>
+<p>l  分词使用场景</p>
+<p>1、索引时分词：创建或更新文档时，会对相应得文档进行分词(指定字段分词)</p>
+<p>PUT my_test</p>
+<p>{</p>
+<p>“mappings”:{</p>
+<p>“doc”:{</p>
+<p>“properties”:{</p>
+<p>“title”:{</p>
+<p>“type”:”text”,</p>
+<p>“analyzer”:”ik_smart”</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>2、查询时分词：查询时会对查询语句进行分词</p>
+<p>POST my_test/_search</p>
+<p>{</p>
+<p>“query”:{</p>
+<p>“match”:{</p>
+<p>“message”:{</p>
+<p>“query”:”hello”,</p>
+<p>“analyzer”:”standard”</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>PUT my_test</p>
+<p>{</p>
+<p>“mappings”:{</p>
+<p>“doc”:{</p>
+<p>“properties”:{</p>
+<p>“title”:{</p>
+<p>“type”:”text”,</p>
+<p>“analyzer”:”whitespace”,</p>
+<p>“search_analyzer”:”standard”                          #查询指定分词器</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>一般不需要特别指定查询时分词器，直接使用索引时分词器即可，否则会出现无法匹配得情况，如果不需要分词将字段type设置成keyword，可以节省空间</p>
+<h4 id="2-9-3、IK分词器"><a href="#2-9-3、IK分词器" class="headerlink" title="2.9.3、IK分词器"></a>2.9.3、IK分词器</h4><p>l  IK分词器的安装</p>
+<p>1）下载地址：<a href="https://github.com/medcl/elasticsearch-analysis-ik/releases">https://github.com/medcl/elasticsearch-analysis-ik/releases</a></p>
+<p>下载与安装的ES相对应的版本</p>
+<p>2）解压，将解压后的elasticsearch文件夹拷贝到elasticsearch-5.6.8\plugins下，并重命名文件夹为analysis-ik</p>
+<p>3）重新启动ElasticSearch，即可加载IK分词器</p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image038.jpg" alt="img"></p>
+<p>l  IK分词器测试</p>
+<p>IK提供了两个分词算法ik_smart 和 ik_max_word，其中 ik_smart 为最少切分，ik_max_word为最细粒度划分</p>
+<p>1）最小切分：</p>
+<p>在浏览器地址栏输入地址</p>
+<p><a href="http://127.0.0.1:9200/_analyze?analyzer=ik_smart&amp;pretty=true&amp;text=我是程序员">http://127.0.0.1:9200/_analyze?analyzer=ik_smart&amp;pretty=true&amp;text=我是程序员</a> </p>
+<p>输出的结果为：</p>
+<p>{</p>
+<p>“tokens” : [</p>
+<p>{</p>
+<p>“token” : “我”,</p>
+<p>“start_offset” : 0,</p>
+<p>“end_offset” : 1,</p>
+<p>“type” : “CN_CHAR”,</p>
+<p>“position” : 0</p>
+<p>},</p>
+<p>{</p>
+<p>“token” : “是”,</p>
+<p>“start_offset” : 1,</p>
+<p>“end_offset” : 2,</p>
+<p>“type” : “CN_CHAR”,</p>
+<p>“position” : 1</p>
+<p>},</p>
+<p>{</p>
+<p>“token” : “程序员”,</p>
+<p>“start_offset” : 2,</p>
+<p>“end_offset” : 5,</p>
+<p>“type” : “CN_WORD”,</p>
+<p>“position” : 2</p>
+<p>}</p>
+<p>]</p>
+<p>}</p>
+<p>2）最细切分：在浏览器地址栏输入地址</p>
+<p><a href="http://127.0.0.1:9200/_analyze?analyzer=ik_max_word&amp;pretty=true&amp;text=我是程序员">http://127.0.0.1:9200/_analyze?analyzer=ik_max_word&amp;pretty=true&amp;text=我是程序员</a></p>
+<p>输出的结果为：</p>
+<p>{</p>
+<p>“tokens” : [</p>
+<p>{</p>
+<p>“token” : “我”,</p>
+<p>“start_offset” : 0,</p>
+<p>“end_offset” : 1,</p>
+<p>“type” : “CN_CHAR”,</p>
+<p>“position” : 0</p>
+<p>},</p>
+<p>{</p>
+<p>“token” : “是”,</p>
+<p>“start_offset” : 1,</p>
+<p>“end_offset” : 2,</p>
+<p>“type” : “CN_CHAR”,</p>
+<p>“position” : 1</p>
+<p>},</p>
+<p>{</p>
+<p>“token” : “程序员”,</p>
+<p>“start_offset” : 2,</p>
+<p>“end_offset” : 5,</p>
+<p>“type” : “CN_WORD”,</p>
+<p>“position” : 2</p>
+<p>},</p>
+<p>{</p>
+<p>“token” : “程序”,</p>
+<p>“start_offset” : 2,</p>
+<p>“end_offset” : 4,</p>
+<p>“type” : “CN_WORD”,</p>
+<p>“position” : 3</p>
+<p>},</p>
+<p>{</p>
+<p>“token” : “员”,</p>
+<p>“start_offset” : 4,</p>
+<p>“end_offset” : 5,</p>
+<p>“type” : “CN_CHAR”,</p>
+<p>“position” : 4</p>
+<p>}</p>
+<p>]</p>
+<p>}</p>
+<h3 id="2-10、Mapping"><a href="#2-10、Mapping" class="headerlink" title="2.10、Mapping"></a>2.10、Mapping</h3><p>l  作用：</p>
+<p>定义数据库中的表的结构的定义，通过mapping来控制索引存储数据的设置</p>
+<p>a.       定义Index下的字段名（Field Name）</p>
+<p>b.       定义字段的类型，比如数值型、字符串型、布尔型等</p>
+<p>c.       定义倒排索引相关的配置，比如documentId、记录position、打分等</p>
+<p>l  获取索引mapping</p>
+<p>不进行配置时，自动创建的mapping</p>
+<p>请求：</p>
+<p>GET /atguigu/_mapping</p>
+<p>响应：</p>
+<p>{</p>
+<p>  “atguigu”: {                                                                            #索引名称</p>
+<p>​    “mappings”: {                                                                    #mapping设置</p>
+<p>​      “student”: {                                                                    #type名称</p>
+<p>​        “properties”: {                                                            #字段属性</p>
+<p>​          “clazz”: {                                                       </p>
+<p>​            “type”: “text”,                                                    #字段类型，字符串默认类型</p>
+<p>​            “fields”: {                                                                   #子字段属性设置</p>
+<p>​              “keyword”: {                                                 #分词类型（不分词）</p>
+<p>​                “type”: “keyword”,                          </p>
+<p>​                “ignore_above”: 256</p>
+<p>​              }</p>
+<p>​            }</p>
+<p>​          },</p>
+<p>​          “description”: {</p>
+<p>​            “type”: “text”,</p>
+<p>​            “fields”: {</p>
+<p>​              “keyword”: {</p>
+<p>​                “type”: “keyword”,</p>
+<p>​                “ignore_above”: 256</p>
+<p>​              }</p>
+<p>​            }</p>
+<p>​          },</p>
+<p>​          “name”: {</p>
+<p>​            “type”: “text”,</p>
+<p>​            “fields”: {</p>
+<p>​              “keyword”: {</p>
+<p>​                “type”: “keyword”,</p>
+<p>​                “ignore_above”: 256</p>
+<p>​              }</p>
+<p>​            }</p>
+<p>​          }</p>
+<p>​        }</p>
+<p>​      }</p>
+<p>​    }</p>
+<p>  }</p>
+<p>}</p>
+<p>l  自定义mapping</p>
+<p>请求：</p>
+<p>PUT my_index                                                                  #索引名称</p>
+<p>{</p>
+<p>  “mappings”:{</p>
+<p>​    “doc”:{                                                               #类型名称</p>
+<p>​      “dynamic”:false,                                          </p>
+<p>​      “properties”:{              </p>
+<p>​        “title”:{</p>
+<p>​          “type”:”text”                                         #字段类型</p>
+<p>​        },</p>
+<p>​        “name”:{</p>
+<p>​          “type”:”keyword”</p>
+<p>​        },</p>
+<p>​        “age”:{</p>
+<p>​          “type”:”integer”</p>
+<p>​        }</p>
+<p>​      }</p>
+<p>​    }</p>
+<p>  }</p>
+<p>}</p>
+<p>响应：</p>
+<p>{</p>
+<p>  “acknowledged”: true,</p>
+<p>  “shards_acknowledged”: true,</p>
+<p>  “index”: “my_index”</p>
+<p>}</p>
+<p>l  Dynamic Mapping</p>
+<p>es依靠json文档字段类型来实现自动识别字段类型，支持的类型</p>
+<p>l  注意：</p>
+<p>mapping中的字段类型一旦设定后，禁止修改</p>
+<p>原因：Lucene实现的倒排索引生成后不允许修改(提高效率)</p>
+<p> 如果要修改字段的类型，需要从新建立索引，然后做reindex操作</p>
+<p>l  dynamic设置</p>
+<p>a.       true：允许自动新增字段（默认的配置）</p>
+<p>b.       False：不允许自动新增字段，但是文档可以正常写入，无法对字段进行查询操作</p>
+<p>c.       strict：文档不能写入（如果写入会报错）</p>
+<p>可以设置在type下，也可以设置在字段中（object类型的字段中）</p>
+<p>例如：</p>
+<p>put my_index</p>
+<p>{</p>
+<p>“mappings”:{</p>
+<p>“doc”:{</p>
+<p>“dynamic”:false,</p>
+<p>“properties”:{</p>
+<p>“user”:{</p>
+<p>“properties”:{</p>
+<p>“name”:{</p>
+<p>“type”:”text”</p>
+<p>},”social_networks”:{</p>
+<p>“dynamic”:true,</p>
+<p>“properties”:{}</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>l  copy_to</p>
+<p>将该字段的值复制到目标字段，实现_all的作用</p>
+<p>不会出现在_source中，只用来搜索</p>
+<p>put my_index</p>
+<p>{</p>
+<p>“mappings”:{</p>
+<p>“doc”:{</p>
+<p>“properties”:{</p>
+<p>“frist_name”:{</p>
+<p>“type”:”text”,</p>
+<p>“cope_to”:”full_name”</p>
+<p>},”last_name”:{</p>
+<p>“type”:”text”,</p>
+<p>“cope_to”:“full_name”</p>
+<p>},”full_name”:{</p>
+<p>“type”:”text”</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>put my_index/doc</p>
+<p>{</p>
+<p>“frist_name”:”John”,</p>
+<p>“last_name”:”Smith”</p>
+<p>}</p>
+<p>GET my_index/doc</p>
+<p>{</p>
+<p>“query”:{</p>
+<p>“match”:{</p>
+<p>“full_name”:”John Smith”,</p>
+<p>“operator”:”and”</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>l  Index属性</p>
+<p>Index属性，控制当前字段是否索引，默认为true，即记录索引，false不记录，即不可以搜索，比如：手机号、身份证号等敏感信息，不希望被检索</p>
+<p>例如：</p>
+<p>1、创建mapping</p>
+<p>PUT my_index</p>
+<p>{</p>
+<p>  “mappings”: {</p>
+<p>​    “doc”:{</p>
+<p>​      “properties”: {</p>
+<p>​        “cookie”:{</p>
+<p>​          “type”:”text”,</p>
+<p>​          “index”: false</p>
+<p>​        }</p>
+<p>​      }</p>
+<p>​    }</p>
+<p>  }</p>
+<p>}</p>
+<p>1、创建文档</p>
+<p>PUT my_index/doc/1</p>
+<p>{</p>
+<p>  “cookie”:”123”,</p>
+<p>  “name”:”home”</p>
+<p>}</p>
+<p>2、查询</p>
+<p>GET my_index/_search</p>
+<p>{</p>
+<p> “query”: {</p>
+<p>   “match”: {</p>
+<p>​     “cookie”:”123”</p>
+<p>   }</p>
+<p> } </p>
+<p>}</p>
+<p>#报错</p>
+<p>GET my_index/_search</p>
+<p>{</p>
+<p> “query”: {</p>
+<p>   “match”: {</p>
+<p>​     “name”:”home”</p>
+<p>   }</p>
+<p> } </p>
+<p>}</p>
+<p>#有结果</p>
+<p>l  Index_options用于控制倒排索引记录的内容，有如下4中配置</p>
+<p>docs：只记录docid</p>
+<p>freqs：记录docid和term frequencies（词频）</p>
+<p>position：记录docid、term frequencies、term position</p>
+<p>Offsets：记录docid、term frequencies、term position、character offsets</p>
+<p>text类型默认配置为position，其默认认为docs</p>
+<p>记录的内容越多，占用的空间越大</p>
+<h3 id="2-11、数据类型"><a href="#2-11、数据类型" class="headerlink" title="2.11、数据类型"></a>2.11、数据类型</h3><p>实际上每个type中的字段是什么数据类型，由mapping定义。</p>
+<p>但是如果没有设定mapping系统会自动，根据一条数据的格式来推断出应该的数据格式。</p>
+<p>l  true/false → boolean</p>
+<p>l  1020  →  long</p>
+<p>l  20.1 → double</p>
+<p>l  “2018-02-01” → date</p>
+<p>l  “hello world” → text +keyword</p>
+<p>默认只有text会进行分词，keyword是不会分词的字符串。</p>
+<p>mapping除了自动定义，还可以手动定义，但是只能对新加的、没有数据的字段进行定义。一旦有了数据就无法再做修改了。</p>
+<p>注意：虽然每个Field的数据放在不同的type下,但是同一个名字的Field在一个index下只能有一种mapping定义。</p>
+<p>l  核心数据类型</p>
+<p>字符串型：text、keyword</p>
+<p>数值型：long、integer、short、byte、double、float、half_float、scaled_float</p>
+<p>日期类型：date</p>
+<p>布尔类型：boolean</p>
+<p>二进制类型：binary</p>
+<p>范围类型：integer_range、float_range、long_range、double_range、date_range</p>
+<p>l  复杂数据类型</p>
+<p>数组类型：array</p>
+<p>对象类型：object</p>
+<p>嵌套类型：nested object</p>
+<p>l  地理位置数据类型</p>
+<p>geo_point(点)、geo_shape(形状)</p>
+<p>l  专用类型</p>
+<p>记录IP地址ip</p>
+<p>实现自动补全completion</p>
+<p>记录分词数：token_count</p>
+<p>记录字符串hash值母乳murmur3</p>
+<p>l  多字段特性multi-fields</p>
+<p>允许对同一个字段采用不同的配置，比如分词，例如对人名实现拼音搜索，只需要在人名中新增一个子字段为pinyin即可</p>
+<p>1、创建mapping</p>
+<p>PUT my_index1</p>
+<p>{</p>
+<p>  “mappings”: {</p>
+<p>​    “doc”:{</p>
+<p>​      “properties”:{</p>
+<p>​        “username”:{</p>
+<p>​          “type”: “text”, </p>
+<p>​          “fields”: {</p>
+<p>​            “pinyin”:{</p>
+<p>​              “type”: “text”</p>
+<p>​            }</p>
+<p>​          }</p>
+<p>​        }</p>
+<p>​      }</p>
+<p>​    }</p>
+<p>  }</p>
+<p>}</p>
+<p>2、创建文档</p>
+<p>PUT my_index1/doc/1</p>
+<p>{</p>
+<p>  “username”:”haha heihei”</p>
+<p>}</p>
+<p>3、查询</p>
+<p>GET my_index1/_search</p>
+<p>{</p>
+<p>  “query”: {</p>
+<p>​    “match”: {</p>
+<p>​      “username.pinyin”: “haha”</p>
+<p>​    }</p>
+<p>  }</p>
+<p>}</p>
+<p>l  Dynamic Mapping</p>
+<p>es可以自动识别文档字段类型，从而降低用户使用成本</p>
+<p>PUT /test_index/doc/1</p>
+<p>{</p>
+<p>  “username”:”alfred”,</p>
+<p>  “age”:1</p>
+<p>}</p>
+<p>{</p>
+<p>  “test_index”: {</p>
+<p>​    “mappings”: {</p>
+<p>​      “doc”: {</p>
+<p>​        “properties”: {</p>
+<p>​          “age”: {</p>
+<p>​            “type”: “long”</p>
+<p>​          },</p>
+<p>​          “username”: {</p>
+<p>​            “type”: “text”,</p>
+<p>​            “fields”: {</p>
+<p>​              “keyword”: {</p>
+<p>​                “type”: “keyword”,</p>
+<p>​                “ignore_above”: 256</p>
+<p>​              }</p>
+<p>​            }</p>
+<p>​          }</p>
+<p>​        }</p>
+<p>​      }</p>
+<p>​    }</p>
+<p>  }</p>
+<p>}</p>
+<p>age自动识别为long类型，username识别为text类型</p>
+<p>PUT test_index/doc/1</p>
+<p>{</p>
+<p>  “username”:”samualz”,</p>
+<p>  “age”:14,</p>
+<p>  “birth”:”1991-12-15”,</p>
+<p>  “year”:18,</p>
+<p>  “tags”:[“boy”,”fashion”],</p>
+<p>  “money”:”100.1”</p>
+<p>}</p>
+<p>{</p>
+<p>  “test_index”: {</p>
+<p>​    “mappings”: {</p>
+<p>​      “doc”: {</p>
+<p>​        “properties”: {</p>
+<p>​          “age”: {</p>
+<p>​            “type”: “long”</p>
+<p>​          },</p>
+<p>​          “birth”: {</p>
+<p>​            “type”: “date”</p>
+<p>​          },</p>
+<p>​          “money”: {</p>
+<p>​            “type”: “text”,</p>
+<p>​            “fields”: {</p>
+<p>​              “keyword”: {</p>
+<p>​                “type”: “keyword”,</p>
+<p>​                “ignore_above”: 256</p>
+<p>​              }</p>
+<p>​            }</p>
+<p>​          },</p>
+<p>​          “tags”: {</p>
+<p>​            “type”: “text”,</p>
+<p>​            “fields”: {</p>
+<p>​              “keyword”: {</p>
+<p>​                “type”: “keyword”,</p>
+<p>​                “ignore_above”: 256</p>
+<p>​              }</p>
+<p>​            }</p>
+<p>​          },</p>
+<p>​          “username”: {</p>
+<p>​            “type”: “text”,</p>
+<p>​            “fields”: {</p>
+<p>​              “keyword”: {</p>
+<p>​                “type”: “keyword”,</p>
+<p>​                “ignore_above”: 256</p>
+<p>​              }</p>
+<p>​            }</p>
+<p>​          },</p>
+<p>​          “year”: {</p>
+<p>​            “type”: “long”</p>
+<p>​          }</p>
+<p>​        }</p>
+<p>​      }</p>
+<p>​    }</p>
+<p>  }</p>
+<p>}</p>
+<p>日期的自动识别可以自行配置日期格式，以满足各种需求</p>
+<p>1、自定义日期识别格式</p>
+<p>PUT my_index</p>
+<p>{</p>
+<p>  “mappings”:{</p>
+<p>​    “doc”:{</p>
+<p>​      “dynamic_date_formats”: [“yyyy-MM-dd”,”yyyy/MM/dd”]</p>
+<p>​    }</p>
+<p>  }</p>
+<p>}</p>
+<p>2、关闭日期自动识别</p>
+<p>PUT my_index</p>
+<p>{</p>
+<p>  “mappings”: {</p>
+<p>​    “doc”: {</p>
+<p>​      “date_detection”: false</p>
+<p>​    }</p>
+<p>  }</p>
+<p>}</p>
+<p>字符串是数字时，默认不会自动识别为整形，因为字符串中出现数字时完全合理的</p>
+<p>Numeric_datection可以开启字符串中数字的自动识别</p>
+<p>PUT my_index</p>
+<p>{</p>
+<p>  “mappings”:{</p>
+<p>​    “doc”:{</p>
+<p>​      “numeric_datection”: true</p>
+<p>​    }</p>
+<p>  }</p>
+<p>}</p>
+<h3 id="2-12、文档操作"><a href="#2-12、文档操作" class="headerlink" title="2.12、文档操作"></a>2.12、文档操作</h3><p>CRUD</p>
+<p>l  创建文档</p>
+<p>1、索引一个文档</p>
+<p>文档通过index API被索引——使数据可以被存储和搜索。但是首先我们需要决定文档所在。正如我们讨论的，文档通过其_index、_type、_id唯一确定。们可以自己提供一个_id，或者也使用index API 为我们生成一个。</p>
+<p>PUT {index}/{type}/{id}</p>
+<p>{</p>
+<p>“”:””</p>
+<p>}</p>
+<p>2、使用自己的ID</p>
+<p>如果你的文档有自然的标识符（例如user_account字段或者其他值表示文档），你就可以提供自己的_id，使用这种形式的index API：</p>
+<p>PUT /{index}/{type}/{id}</p>
+<p>{</p>
+<p>  “field”: “value”,</p>
+<p>  …</p>
+<p>}</p>
+<p>例如我们的索引叫做“website”，类型叫做“blog”，我们选择的ID是“123”，那么这个索引请求就像这样：</p>
+<p>PUT /website/blog/123</p>
+<p>{</p>
+<p>  “title”: “My first blog entry”,</p>
+<p>  “text”:  “Just trying this out…”,</p>
+<p>  “date”:  “2014/01/01”</p>
+<p>}</p>
+<p>Elasticsearch的响应：</p>
+<p>{</p>
+<p>   “_index”:    “website”,</p>
+<p>   “_type”:     “blog”,</p>
+<p>   “_id”:       “123”,</p>
+<p>   “_version”:  1,</p>
+<p>   “created”:   true</p>
+<p>}</p>
+<p>响应指出请求的索引已经被成功创建，这个索引中包含_index、_type和_id元数据，以及一个新元素：_version。</p>
+<p>Elasticsearch中每个文档都有版本号，每当文档变化（包括删除）都会使_version增加。_version确保你程序的一部分不会覆盖掉另一部分所做的更改。</p>
+<p>3、自增ID</p>
+<p>如果我们的数据没有自然ID，我们可以让Elasticsearch自动为我们生成。请求结构发生了变化：PUT方法——“在这个URL中存储文档”变成了POST方法——“在这个类型下存储文档”。（译者注：原来是把文档存储到某个ID对应的空间，现在是把这个文档添加到某个_type下）。</p>
+<p>URL现在只包含_index和_type两个字段：</p>
+<p>POST /website/blog/</p>
+<p>{</p>
+<p>  “title”: “My second blog entry”,</p>
+<p>  “text”:  “Still trying this out…”,</p>
+<p>  “date”:  “2014/01/01”</p>
+<p>}</p>
+<p>响应内容与刚才类似，只有_id字段变成了自动生成的值：</p>
+<p>{</p>
+<p>   “_index”:    “website”,</p>
+<p>   “_type”:     “blog”,</p>
+<p>   “_id”:       “wM0OSFhDQXGZAWDf0-drSA”,</p>
+<p>   “_version”:  1,</p>
+<p>   “created”:   true</p>
+<p>}</p>
+<p>自动生成的ID有22个字符长，URL-safe, Base64-encoded string universally unique identifiers, 或者叫 <a href="http://en.wikipedia.org/wiki/Uuid">UUIDs</a>。</p>
+<p>l  获取文档</p>
+<p>1、检索文档</p>
+<p>想要从Elasticsearch中获取文档，我们使用同样的_index、_type、_id，但是HTTP方法改为GET：</p>
+<p>GET /website/blog/123?pretty</p>
+<p>响应包含了现在熟悉的元数据节点，增加了_source字段，它包含了在创建索引时我们发送给Elasticsearch的原始文档。</p>
+<p>{</p>
+<p>  “_index” :   “website”,</p>
+<p>  “_type” :    “blog”,</p>
+<p>  “_id” :      “123”,</p>
+<p>  “_version” : 1,</p>
+<p>  “found” :    true,</p>
+<p>  “_source” :  {</p>
+<p>​      “title”: “My first blog entry”,</p>
+<p>​      “text”:  “Just trying this out…”,</p>
+<p>​      “date”:  “2014/01/01”</p>
+<p>  }</p>
+<p>}</p>
+<p>2、pretty</p>
+<p>在任意的查询字符串中增加pretty参数，类似于上面的例子。会让Elasticsearch美化输出(pretty-print)JSON响应以便更加容易阅读。_source字段不会被美化，它的样子与我们输入的一致。</p>
+<p>GET请求返回的响应内容包括{“found”: true}。这意味着文档已经找到。如果我们请求一个不存在的文档，依旧会得到一个JSON，不过found值变成了false。</p>
+<p>此外，HTTP响应状态码也会变成’404 Not Found’代替’200 OK’。我们可以在curl后加-i参数得到响应头：</p>
+<p>curl -i -XGET <a href="http://localhost:9200/website/blog/124?pretty">http://localhost:9200/website/blog/124?pretty</a></p>
+<p>现在响应类似于这样：</p>
+<p>HTTP/1.1 404 Not Found</p>
+<p>Content-Type: application/json; charset=UTF-8</p>
+<p>Content-Length: 83</p>
+<p>{</p>
+<p>  “_index” : “website”,</p>
+<p>  “_type” :  “blog”,</p>
+<p>  “_id” :    “124”,</p>
+<p>  “found” :  false</p>
+<p>}</p>
+<p>3、检索文档的一部分</p>
+<p>通常，GET请求将返回文档的全部，存储在_source参数中。但是可能你感兴趣的字段只是title。请求个别字段可以使用_source参数。多个字段可以使用逗号分隔：</p>
+<p>GET /website/blog/123?_source=title,text</p>
+<p>_source字段现在只包含我们请求的字段，而且过滤了date字段：</p>
+<p>{</p>
+<p>  “_index” :   “website”,</p>
+<p>  “_type” :    “blog”,</p>
+<p>  “_id” :      “123”,</p>
+<p>  “_version” : 1,</p>
+<p>  “exists” :   true,</p>
+<p>  “_source” : {</p>
+<p>​      “title”: “My first blog entry” ,</p>
+<p>​      “text”:  “Just trying this out…”</p>
+<p>  }</p>
+<p>}</p>
+<p>或者你只想得到_source字段而不要其他的元数据，你可以这样请求：</p>
+<p>GET /website/blog/123/_source</p>
+<p>它仅仅返回:</p>
+<p>{</p>
+<p>   “title”: “My first blog entry”,</p>
+<p>   “text”:  “Just trying this out…”,</p>
+<p>   “date”:  “2014/01/01”</p>
+<p>}</p>
+<p>l  更新</p>
+<p>POST /website/blog/123</p>
+<p>{</p>
+<p>  “title”: “My first blog entry”,</p>
+<p>  “text”:  “I am starting to get the hang of this…”,</p>
+<p>  “date”:  “2014/01/02”</p>
+<p>}</p>
+<p>在响应中，我们可以看到Elasticsearch把_version增加了。</p>
+<p>{</p>
+<p>  “_index” :   “website”,</p>
+<p>  “_type” :    “blog”,</p>
+<p>  “_id” :      “123”,</p>
+<p>  “_version” : 2,</p>
+<p>  “created”:   false &lt;1&gt;</p>
+<p>}</p>
+<p>l  删除文档</p>
+<p>删除文档的语法模式与之前基本一致，只不过要使用DELETE方法：</p>
+<p>DELETE /website/blog/123</p>
+<p>l  局部更新</p>
+<p>POST /website/blog/1/_update</p>
+<p>{</p>
+<p>   “doc” : {</p>
+<p>​      “tags” : [ “testing” ],</p>
+<p>​      “views”: 0</p>
+<p>   }</p>
+<p>}</p>
+<p>如果请求成功，我们将看到类似index请求的响应结果：</p>
+<p>{</p>
+<p>   “_index” :   “website”,</p>
+<p>   “_id” :      “1”,</p>
+<p>   “_type” :    “blog”,</p>
+<p>   “_version” : 3</p>
+<p>}</p>
+<p>检索文档文档显示被更新的_source字段：</p>
+<p>{</p>
+<p>   “_index”:    “website”,</p>
+<p>   “_type”:     “blog”,</p>
+<p>   “_id”:       “1”,</p>
+<p>   “_version”:  3,</p>
+<p>   “found”:     true,</p>
+<p>   “_source”: {</p>
+<p>​      “title”:  “My first blog entry”,</p>
+<p>​      “text”:   “Starting to get the hang of this…”,</p>
+<p>​      “tags”: [ “testing” ], &lt;1&gt;</p>
+<p>​      “views”:  0 &lt;1&gt;</p>
+<p>   }</p>
+<p>}</p>
+<p>l  批量插入</p>
+<p> 每个json之间不能有换行\n</p>
+<p>POST test_search_index/doc/_bulk</p>
+<p>{</p>
+<p>  “index”:{</p>
+<p>​    “_id”:1</p>
+<p>  }</p>
+<p>}</p>
+<p>{</p>
+<p>  “username”:”alfred way”,</p>
+<p>  “job”:”java engineer”,</p>
+<p>  “age”:18,</p>
+<p>  “birth”:”1991-12-15”,</p>
+<p>  “isMarried”:false</p>
+<p>}</p>
+<p>{</p>
+<p>  “index”:{</p>
+<p>​    “_id”:2</p>
+<p>  }</p>
+<p>}</p>
+<p>{</p>
+<p>  “username”:”alfred”,</p>
+<p>  “job”:”java senior engineer and java specialist”,</p>
+<p>  “age”:28,</p>
+<p>  “birth”:”1980-05-07”,</p>
+<p>  “isMarried”:true</p>
+<p>}</p>
+<p>{</p>
+<p>  “index”:{</p>
+<p>​    “_id”:3</p>
+<p>  }</p>
+<p>}</p>
+<p>{</p>
+<p>  “username”:”lee”,</p>
+<p>  “job”:”java and ruby engineer”,</p>
+<p>  “age”:22,</p>
+<p>  “birth”:”1985-08-07”,</p>
+<p>  “isMarried”:false</p>
+<p>}</p>
+<p>{</p>
+<p>  “index”:{</p>
+<p>​    “_id”:4</p>
+<p>  }</p>
+<p>}</p>
+<p>{</p>
+<p>  “username”:”lee junior way”,</p>
+<p>  “job”:”ruby engineer”,</p>
+<p>  “age”:23,</p>
+<p>  “birth”:”1986-08-07”,</p>
+<p>  “isMarried”:false</p>
+<p>}</p>
+<p>l  检索多个文档</p>
+<p>像Elasticsearch一样，检索多个文档依旧非常快。合并多个请求可以避免每个请求单独的网络开销。如果你需要从Elasticsearch中检索多个文档，相对于一个一个的检索，更快的方式是在一个请求中使用multi-get或者mget API。</p>
+<p>mget API参数是一个docs数组，数组的每个节点定义一个文档的_index、_type、_id元数据。如果你只想检索一个或几个确定的字段，也可以定义一个_source参数：</p>
+<p>POST /_mget</p>
+<p>{</p>
+<p>   “docs” : [</p>
+<p>​      {</p>
+<p>​         “_index” : “website”,</p>
+<p>​         “_type” :  “blog”,</p>
+<p>​         “_id” :    2</p>
+<p>​      },</p>
+<p>​      {</p>
+<p>​         “_index” : “website”,</p>
+<p>​         “_type” :  “pageviews”,</p>
+<p>​         “_id” :    1,</p>
+<p>​         “_source”: “views”</p>
+<p>​      }</p>
+<p>   ]</p>
+<p>}</p>
+<p>响应体也包含一个docs数组，每个文档还包含一个响应，它们按照请求定义的顺序排列。每个这样的响应与单独使用get request响应体相同：</p>
+<p>{</p>
+<p>   “docs” : [</p>
+<p>​      {</p>
+<p>​         “_index” :   “website”,</p>
+<p>​         “_id” :      “2”,</p>
+<p>​         “_type” :    “blog”,</p>
+<p>​         “found” :    true,</p>
+<p>​         “_source” : {</p>
+<p>​            “text” :  “This is a piece of cake…”,</p>
+<p>​            “title” : “My first external blog entry”</p>
+<p>​         },</p>
+<p>​         “_version” : 10</p>
+<p>​      },</p>
+<p>​      {</p>
+<p>​         “_index” :   “website”,</p>
+<p>​         “_id” :      “1”,</p>
+<p>​         “_type” :    “pageviews”,</p>
+<p>​         “found” :    true,</p>
+<p>​         “_version” : 2,</p>
+<p>​         “_source” : {</p>
+<p>​            “views” : 2</p>
+<p>​         }</p>
+<p>​      }</p>
+<p>   ]</p>
+<p>}</p>
+<p>如果你想检索的文档在同一个_index中（甚至在同一个_type中），你就可以在URL中定义一个默认的/_index或者/_index/_type。</p>
+<p>你可以通过简单的ids数组来代替完整的docs数组：</p>
+<p>POST /website/blog/_mget</p>
+<p>{</p>
+<p>   “ids” : [ “2”, “1” ]</p>
+<p>}</p>
+<p>注意到我们请求的第二个文档并不存在。我们定义了类型为blog，但是ID为1的文档类型为pageviews。这个不存在的文档会在响应体中被告知。</p>
+<p>{</p>
+<p>  “docs” : [</p>
+<p>​    {</p>
+<p>​      “_index” :   “website”,</p>
+<p>​      “_type” :    “blog”,</p>
+<p>​      “_id” :      “2”,</p>
+<p>​      “_version” : 10,</p>
+<p>​      “found” :    true,</p>
+<p>​      “_source” : {</p>
+<p>​        “title”:   “My first external blog entry”,</p>
+<p>​        “text”:    “This is a piece of cake…”</p>
+<p>​      }</p>
+<p>​    },</p>
+<p>​    {</p>
+<p>​      “_index” :   “website”,</p>
+<p>​      “_type” :    “blog”,</p>
+<p>​      “_id” :      “1”,</p>
+<p>​      “found” :    false  &lt;1&gt;</p>
+<p>​    }</p>
+<p>  ]</p>
+<p>}</p>
+<h3 id="2-13、Search-API-URI"><a href="#2-13、Search-API-URI" class="headerlink" title="2.13、Search API(URI)"></a>2.13、Search API(URI)</h3><p>GET /_search                                                    #查询所有索引文档</p>
+<p>GET /my_index/_search                                  #查询指定索引文档</p>
+<p>GET /my_index1,my_index2/_search            #多索引查询</p>
+<p>GET /my_*/_search        </p>
+<p>2019-03-xxx</p>
+<p>2019-04-vvv</p>
+<p>2019-05-xxx                    </p>
+<p>l  URI查询方式（查询有限制，很多配置不能实现）</p>
+<p>GET /my_index/_search?q=user:alfred          #指定字段查询</p>
+<p>GET /my_index/_search?q=keyword&amp;df=user&amp;sort=age:asc&amp;from=4&amp;size=10&amp;timeout=1s</p>
+<p>q : 指定查询的语句，例如q=aa或q=user:aa</p>
+<p>df:q中不指定字段默认查询的字段，如果不指定，es会查询所有字段</p>
+<p>Sort：排序，asc升序，desc降序</p>
+<p>timeout：指定超时时间，默认不超时</p>
+<p>from，size：用于分页</p>
+<p>n  term与phrase</p>
+<p>term相当于单词查询，phrase相当于词语查询</p>
+<p>term：Alfred way等效于alfred or way</p>
+<p>phrase：”Alfred way” 词语查询，要求先后顺序</p>
+<p>n  泛查询</p>
+<p>Alfred等效于在所有字段去匹配该term(不指定字段查询)</p>
+<p>n  指定字段</p>
+<p>name:alfred</p>
+<p>n  Group分组设定（），使用括号指定匹配的规则</p>
+<p>（quick OR brown）AND fox：通过括号指定匹配的优先级</p>
+<p>status:(active OR pending) title:(full text search)：把关键词当成一个整体</p>
+<p>l  查询案例及详解</p>
+<p>1、批量创建文档</p>
+<p>POST test_search_index/doc/_bulk</p>
+<p>{</p>
+<p>  “index”:{</p>
+<p>​    “_id”:1</p>
+<p>  }</p>
+<p>}</p>
+<p>{</p>
+<p>  “username”:”alfred way”,</p>
+<p>  “job”:”java engineer”,</p>
+<p>  “age”:18,</p>
+<p>  “birth”:”1991-12-15”,</p>
+<p>  “isMarried”:false</p>
+<p>}</p>
+<p>{</p>
+<p>  “index”:{</p>
+<p>​    “_id”:2</p>
+<p>  }</p>
+<p>}</p>
+<p>{</p>
+<p>  “username”:”alfred”,</p>
+<p>  “job”:”java senior engineer and java specialist”,</p>
+<p>  “age”:28,</p>
+<p>  “birth”:”1980-05-07”,</p>
+<p>  “isMarried”:true</p>
+<p>}</p>
+<p>{</p>
+<p>  “index”:{</p>
+<p>​    “_id”:3</p>
+<p>  }</p>
+<p>}</p>
+<p>{</p>
+<p>  “username”:”lee”,</p>
+<p>  “job”:”java and ruby engineer”,</p>
+<p>  “age”:22,</p>
+<p>  “birth”:”1985-08-07”,</p>
+<p>  “isMarried”:false</p>
+<p>}</p>
+<p>{</p>
+<p>  “index”:{</p>
+<p>​    “_id”:4</p>
+<p>  }</p>
+<p>}</p>
+<p>{</p>
+<p>  “username”:”lee junior way”,</p>
+<p>  “job”:”ruby engineer”,</p>
+<p>  “age”:23,</p>
+<p>  “birth”:”1986-08-07”,</p>
+<p>  “isMarried”:false</p>
+<p>}</p>
+<p>2、泛查询</p>
+<p>GET test_search_index/_search?q=alfred</p>
+<p>3、查询语句执行计划查看</p>
+<p>GET test_search_index/_search?q=alfred</p>
+<p>{</p>
+<p>  “profile”:true</p>
+<p>}</p>
+<p>4、term查询</p>
+<p>GET test_search_index/_search?q=username:alfred way               #alfred OR way</p>
+<p>5、phrase查询</p>
+<p>GET test_search_index/_search?q=username:”alfred way”</p>
+<p>6、group查询</p>
+<p>GET test_search_index/_search?q=username:(alfred OR way)</p>
+<p>7、布尔操作符</p>
+<p>（1）AND(&amp;&amp;),OR(||),NOT(!)</p>
+<p>例如：name:(tom NOT lee)   </p>
+<p>#表示name字段中可以包含tom但一定不包含lee</p>
+<p>（2）+、-分别对应must和must_not</p>
+<p>例如：name:(tom +lee -alfred)      </p>
+<p>#表示name字段中，一定包含lee，一定不包含alfred，可以包含tom</p>
+<p>注意：+在url中会被解析成空格，要使用encode后的结果才可以，为%2B</p>
+<p>GET test_search_index/_search?q=username:(alfred %2Bway)</p>
+<p>l  范围查询，支持数值和日期</p>
+<p>1、区间：闭区间：[]，开区间:{}</p>
+<p>age:[1 TO 10] #1&lt;=age&lt;=10</p>
+<p>age:[1 TO 10} #1&lt;=age&lt;10</p>
+<p>age:[1 TO ]      #1&lt;=age</p>
+<p>age:[* TO 10] #age&lt;=10</p>
+<p>2、算术符号写法</p>
+<p>age:&gt;=1</p>
+<p>age:(&gt;=1&amp;&amp;&lt;=10)或者age:(+&gt;=1 +&lt;=10)</p>
+<p>l  通配符查询</p>
+<p>?:1个字符</p>
+<p>*:0或多个字符</p>
+<p>例如：name:t?m</p>
+<p>  name:tom*</p>
+<p>  name:t*m</p>
+<p>注意：通配符匹配执行效率低，且占用较多内存，不建议使用，如无特殊要求，不要讲?/*放在最前面</p>
+<p>l  正则表达式</p>
+<p>name:/[mb]oat/</p>
+<p>l  模糊匹配fuzzy query</p>
+<p>name:roam~1                   [0,1,2]   </p>
+<p>匹配与roam差1个character的词，比如foam、roams等</p>
+<p>l  近似度查询proximity search</p>
+<p>“fox quick”~5</p>
+<p>以term为单位进行差异比较，比如”quick fox” “quick brown fox”</p>
+<h3 id="2-14、Search-API-Request-Body-Search"><a href="#2-14、Search-API-Request-Body-Search" class="headerlink" title="2.14、Search API(Request Body Search)"></a>2.14、Search API(Request Body Search)</h3><h4 id="1-查看es中有哪些索引"><a href="#1-查看es中有哪些索引" class="headerlink" title="1 查看es中有哪些索引"></a>1 查看es中有哪些索引</h4><p>es 中会默认存在一个名为.kibana的索引</p>
+<p>表头的含义</p>
+<h4 id="2-增加一个索引-库"><a href="#2-增加一个索引-库" class="headerlink" title="2 增加一个索引(库)"></a>2 增加一个索引(库)</h4><h4 id="3-删除一个索引"><a href="#3-删除一个索引" class="headerlink" title="3 删除一个索引"></a>3 删除一个索引</h4><p>​      ES 是不删除也不修改任何数据</p>
+<h4 id="4-新增文档"><a href="#4-新增文档" class="headerlink" title="4 新增文档"></a>4 新增文档</h4><p>1、 格式 PUT /index/type/id</p>
+<p>如果之前没建过index或者type，es 会自动创建。</p>
+<h4 id="5-直接用id查找"><a href="#5-直接用id查找" class="headerlink" title="5 直接用id查找"></a>5 直接用id查找</h4><h4 id="6-修改—整体替换"><a href="#6-修改—整体替换" class="headerlink" title="6 修改—整体替换"></a>6 修改—整体替换</h4><p>和新增没有区别</p>
+<h4 id="7修改—某个字段"><a href="#7修改—某个字段" class="headerlink" title="7修改—某个字段"></a>7修改—某个字段</h4><h4 id="8-删除一个document"><a href="#8-删除一个document" class="headerlink" title="8 删除一个document"></a>8 删除一个document</h4><h4 id="9-搜索type全部数据"><a href="#9-搜索type全部数据" class="headerlink" title="9 搜索type全部数据"></a>9 搜索type全部数据</h4><p>结果</p>
+<h4 id="10-按条件查询-全部"><a href="#10-按条件查询-全部" class="headerlink" title="10 按条件查询(全部)"></a>10 按条件查询(全部)</h4><h4 id="11-按分词查询"><a href="#11-按分词查询" class="headerlink" title="11 按分词查询"></a>11 按分词查询</h4><p>注意结果的评分</p>
+<h4 id="12-按分词子属性查询"><a href="#12-按分词子属性查询" class="headerlink" title="12 按分词子属性查询"></a>12 按分词子属性查询</h4><h4 id="13-match-phrase"><a href="#13-match-phrase" class="headerlink" title="13  match phrase"></a>13  match phrase</h4><p>按短语查询，不再利用分词技术，直接用短语在原始数据中匹配</p>
+<h4 id="14-fuzzy查询"><a href="#14-fuzzy查询" class="headerlink" title="14  fuzzy查询"></a>14  fuzzy查询</h4><p>校正匹配分词，当一个单词都无法准确匹配，es通过一种算法对非常接近的单词也给与一定的评分，能够查询出来，但是消耗更多的性能。</p>
+<h4 id="15-过滤–查询后过滤"><a href="#15-过滤–查询后过滤" class="headerlink" title="15  过滤–查询后过滤"></a>15  过滤–查询后过滤</h4><h4 id="16-过滤–查询前过滤（推荐）"><a href="#16-过滤–查询前过滤（推荐）" class="headerlink" title="16 过滤–查询前过滤（推荐）"></a>16 过滤–查询前过滤（推荐）</h4><h4 id="17-过滤–按范围过滤"><a href="#17-过滤–按范围过滤" class="headerlink" title="17 过滤–按范围过滤"></a>17 过滤–按范围过滤</h4><p>关于范围操作符：</p>
+<h4 id="18-排序"><a href="#18-排序" class="headerlink" title="18  排序"></a>18  排序</h4><h4 id="19-分页查询"><a href="#19-分页查询" class="headerlink" title="19 分页查询"></a>19 分页查询</h4><h4 id="20-指定查询的字段"><a href="#20-指定查询的字段" class="headerlink" title="20 指定查询的字段"></a>20 指定查询的字段</h4><h4 id="21-高亮"><a href="#21-高亮" class="headerlink" title="21 高亮"></a>21 高亮</h4><h4 id="22-java客户端"><a href="#22-java客户端" class="headerlink" title="22 java客户端"></a>22 java客户端</h4><h4 id="23-复杂查询"><a href="#23-复杂查询" class="headerlink" title="23 复杂查询"></a>23 复杂查询</h4><h3 id="2-15、相关性算分"><a href="#2-15、相关性算分" class="headerlink" title="2.15、相关性算分"></a>2.15、相关性算分</h3><p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image040.jpg" alt="img"></p>
+<p>相关性算分：指文档与查询语句间的相关度，通过倒排索引可以获取与查询语句相匹配的文档列表</p>
+<p>如何将最符合用户查询需求的文档放到前列呢？</p>
+<p>本质问题是一个排序的问题，排序的依据是相关性算分，确定倒排索引哪个文档排在前面</p>
+<p>影响相关度算分的参数：</p>
+<p>1、TF(Term Frequency)：词频，即单词在文档中出现的次数，词频越高，相关度越高</p>
+<p>2、Document Frequency(DF)：文档词频，即单词出现的文档数</p>
+<p>3、IDF(Inverse Document Frequency)：逆向文档词频，与文档词频相反，即1/DF。即单词出现的文档数越少，相关度越高（如果一个单词在文档集出现越少，算为越重要单词）</p>
+<p>4、Field-length Norm：文档越短，相关度越高</p>
+<p>l  TF/IDE模型</p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image042.jpg" alt="img"></p>
+<p>l  BM25模型（5.X之后的默认模型）</p>
+<p>对之前算分进行优化</p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image044.jpg" alt="img"></p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image046.jpg" alt="img"></p>
+<p>BM25相比TF/IDF的一大优化是降低了tf在过大时的权重，避免词频对查询影响过大</p>
+<p>查看算分</p>
+<p>GET test_search_index/_search</p>
+<p>{</p>
+<p>  “explain”: true, </p>
+<p>  “query”:{</p>
+<p>​    “match”: {</p>
+<p>​      “username”: {</p>
+<p>​        “query”:”alfred way”,</p>
+<p>​        “operator”:”and”</p>
+<p>​      }</p>
+<p>​    }</p>
+<p>  }</p>
+<p>}</p>
+<h2 id="三、Elasticsearch集群"><a href="#三、Elasticsearch集群" class="headerlink" title="三、Elasticsearch集群"></a>三、Elasticsearch集群</h2><h3 id="3-1、ElasticSerach集群安装"><a href="#3-1、ElasticSerach集群安装" class="headerlink" title="3.1、ElasticSerach集群安装"></a>3.1、ElasticSerach集群安装</h3><p>l  修改配置文件elasticserach.yml</p>
+<p>vim /elasticsearch.yml</p>
+<p>cluster.name: aubin-cluster     #必须相同 </p>
+<p># 集群名称（不能重复）</p>
+<p>node.name: els1（必须不同）</p>
+<p># 节点名称，仅仅是描述名称，用于在日志中区分（自定义）</p>
+<p>#指定了该节点可能成为 master 节点，还可以是数据节点<br>         node.master: true<br>         node.data: true</p>
+<p>path.data: /opt/data</p>
+<p># 数据的默认存放路径（自定义）</p>
+<p>path.logs: /opt/logs </p>
+<p># 日志的默认存放路径 </p>
+<p>network.host: 192.168.0.1 </p>
+<p># 当前节点的IP地址 </p>
+<p>http.port: 9200 </p>
+<p># 对外提供服务的端口</p>
+<p>transport.tcp.port: 9300</p>
+<p>#9300为集群服务的端口 </p>
+<p>discovery.zen.ping.unicast.hosts: [“172.18.68.11”, “172.18.68.12”,”172.18.68.13”] </p>
+<p># 集群个节点IP地址，也可以使用域名，需要各节点能够解析 </p>
+<p>discovery.zen.minimum_master_nodes: 2 </p>
+<p># 为了避免脑裂，集群节点数最少为 半数+1</p>
+<p>注意：清空data和logs数据</p>
+<p>192.168.14.12:9200/_cat/nodes?v</p>
+<h3 id="3-2、安装head插件"><a href="#3-2、安装head插件" class="headerlink" title="3.2、安装head插件"></a>3.2、安装head插件</h3><p>l  下载head插件</p>
+<p>wget <a href="https://github.com/mobz/elasticsearch-head/archive/master.zip">https://github.com/mobz/elasticsearch-head/archive/elasticsearch-head-master.zip</a></p>
+<p>也可以用git下载，前提yum install git</p>
+<p>unzip elasticsearch-head-master.zip</p>
+<p>l  安装node.js</p>
+<p>wget <a href="https://npm.taobao.org/mirrors/node/latest-v4.x/node-v4.4.7-linux-x64.tar.gz">https://npm.taobao.org/mirrors/node/latest-v4.x/node-v4.4.7-linux-x64.tar.gz</a></p>
+<p>tar -zxvf  node-v9.9.0-linux-x64.tar.gz</p>
+<p>l  添加node.js到环境变量</p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image048.jpg" alt="img"></p>
+<p>source /etc/profile</p>
+<p>l  测试</p>
+<p>node -v </p>
+<p>npm -v</p>
+<p>l  安装grunt（grunt是一个很方便的构建工具，可以进行打包压缩、测试、执行等等的工作）</p>
+<p>进入到elasticsearch-head-master</p>
+<p>npm install -g grunt-cli</p>
+<p>npm install</p>
+<p>(npm install -g cnpm –registry=<a href="https://registry.npm.taobao.org">https://registry.npm.taobao.org</a>)</p>
+<p>l  修改Elasticsearch配置文件</p>
+<p>编辑elasticsearch-6.3.1/config/elasticsearch.yml,加入以下内容：</p>
+<p>http.cors.enabled: true</p>
+<p>http.cors.allow-origin: “*”</p>
+<p>l  修改Gruntfile.js（注意’，’）</p>
+<p>打开elasticsearch-head-master/Gruntfile.js，找到下面connect属性，新增hostname:’*’:</p>
+<p>connect: {</p>
+<p>​        server: {</p>
+<p>​            options: {</p>
+<p>​                hostname: ‘*’,</p>
+<p>​                port: 9100,</p>
+<p>​                base: ‘.’,</p>
+<p>​                keepalive: true</p>
+<p>​            }</p>
+<p>​        }</p>
+<p>}   </p>
+<p>l  启动elasticsearch-head</p>
+<p>进入elasticsearch-head目录，执行命令：grunt server</p>
+<p>l  后台启动elasticsearch-head</p>
+<p>nohup grunt server &amp;exit</p>
+<p>l  关闭head插件</p>
+<p>ps -aux|grep head</p>
+<p>kill 进程号</p>
+<h3 id="3-3、集群简介"><a href="#3-3、集群简介" class="headerlink" title="3.3、集群简介"></a>3.3、集群简介</h3><p>一个节点(node)就是一个Elasticsearch实例，而一个集群(cluster)由一个或多个节点组成，它们具有相同的cluster.name，它们协同工作，分享数据和负载。</p>
+<p>当加入新的节点或者删除一个节点时，集群就会感知到并平衡数据（同步）。</p>
+<h4 id="3-3-1、集群节点"><a href="#3-3-1、集群节点" class="headerlink" title="3.3.1、集群节点"></a>3.3.1、集群节点</h4><p>1、集群中一个节点会被选举为主节点(master)</p>
+<p>2、主节点临时管理集群级别的一些变更，例如新建或删除索引、增加或移除节点等。</p>
+<p>3、主节点不参与文档级别的变更或搜索，这意味着在流量增长的时候，该主节点不会成为集群的瓶颈。</p>
+<p>4、任何节点都可以成为主节点。</p>
+<p>5、用户，我们能够与集群中的任何节点通信，包括主节点。</p>
+<p>6、每一个节点都知道文档存在于哪个节点上，它们可以转发请求到相应的节点上。</p>
+<p>7、我们访问的节点负责收集各节点返回的数据，最后一起返回给客户端。这一切都由Elasticsearch处理。</p>
+<h4 id="3-3-2、集群健康"><a href="#3-3-2、集群健康" class="headerlink" title="3.3.2、集群健康"></a>3.3.2、集群健康</h4><p>在Elasticsearch集群中可以监控统计很多信息，但是只有一个是最重要的：集群健康(cluster health)。集群健康有三种状态：green、yellow或red。</p>
+<p>在一个没有索引的空集群中运行如上查询，将返回这些信息：</p>
+<p>GET /_cluster/health</p>
+<p>{</p>
+<p>   “cluster_name”:          “elasticsearch”,</p>
+<p>   “status”:                “green”, </p>
+<p>   “timed_out”:             false,</p>
+<p>   “number_of_nodes”:       1,</p>
+<p>   “number_of_data_nodes”:  1,</p>
+<p>   “active_primary_shards”: 0,</p>
+<p>   “active_shards”:         0,</p>
+<p>   “relocating_shards”:     0,</p>
+<p>   “initializing_shards”:   0,</p>
+<p>   “unassigned_shards”:     0</p>
+<p>}</p>
+<p>status字段提供一个综合的指标来表示集群的的服务状况。三种颜色各自的含义：</p>
+<h4 id="3-3-3、集群分片"><a href="#3-3-3、集群分片" class="headerlink" title="3.3.3、集群分片"></a>3.3.3、集群分片</h4><p>索引只是一个用来指向一个或多个分片(shards)的“逻辑命名空间(logical namespace)”.</p>
+<p>分片(shard)是一个最小级别“工作单元(worker unit)”,它只是保存了索引中所有数据的一部分，是一个Lucene实例，并且它本身就是一个完整的搜索引擎。我们的文档存储在分片中，并且在分片中被索引，但是我们的应用程序不会直接与它们通信，取而代之的是，直接与索引通信。</p>
+<p>分片是Elasticsearch在集群中分发数据的关键。把分片想象成数据的容器。文档存储在分片中，然后分片分配到你集群中的节点上。当你的集群扩容或缩小，Elasticsearch将会自动在你的节点间迁移分片，以使集群保持平衡。</p>
+<p>1、主分片</p>
+<p>索引中的每个文档属于一个单独的主分片，所以主分片的数量决定了索引最多能存储多少数据。</p>
+<p>理论上主分片能存储的数据大小是没有限制的，限制取决于你实际的使用情况。分片的最大容量完全取决于你的使用状况：硬件存储的大小、文档的大小和复杂度、如何索引和查询你的文档，以及你期望的响应时间。</p>
+<p>2、副分片</p>
+<p>复制分片只是主分片的一个副本，它可以防止硬件故障导致的数据丢失，同时可以提供读请求，比如搜索或者从别的shard取回文档。</p>
+<p>当索引创建完成的时候，主分片的数量就固定了，但是复制分片的数量可以随时调整。</p>
+<p>创建分片：</p>
+<p>PUT /blogs</p>
+<p>{</p>
+<p>   “settings” : {</p>
+<p>​      “number_of_shards” : 3,</p>
+<p>​      “number_of_replicas” : 1</p>
+<p>   }</p>
+<p>}</p>
+<p>增加副分片：</p>
+<p>PUT /blogs/_settings</p>
+<p>{</p>
+<p>   “number_of_replicas” : 2</p>
+<p>}</p>
+<p>主分片设置后不能进行修改，只能修改副本分片</p>
+<p>集群的健康状态yellow表示所有的主分片(primary shards)启动并且正常运行了——集群已经可以正常处理任何请求——但是复制分片(replica shards)还没有全部可用。事实上所有的三个复制分片现在都是unassigned状态——它们还未被分配给节点。在同一个节点上保存相同的数据副本是没有必要的，如果这个节点故障了，那所有的数据副本也会丢失。</p>
+<h4 id="3-3-4、故障转移"><a href="#3-3-4、故障转移" class="headerlink" title="3.3.4、故障转移"></a>3.3.4、故障转移</h4><p>在单一节点上运行意味着有单点故障的风险——没有数据备份。幸运的是，要防止单点故障，我们唯一需要做的就是启动另一个节点。</p>
+<p>第二个节点已经加入集群，三个复制分片(replica shards)也已经被分配了——分别对应三个主分片，这意味着在丢失任意一个节点的情况下依旧可以保证数据的完整性。</p>
+<p>文档的索引将首先被存储在主分片中，然后并发复制到对应的复制节点上。这可以确保我们的数据在主节点和复制节点上都可以被检索。</p>
+<h3 id="3-4、集群操作原理"><a href="#3-4、集群操作原理" class="headerlink" title="3.4、集群操作原理"></a>3.4、集群操作原理</h3><h4 id="3-4-1、路由"><a href="#3-4-1、路由" class="headerlink" title="3.4.1、路由"></a>3.4.1、路由</h4><p>当你索引一个文档，它被存储在单独一个主分片上。Elasticsearch是如何知道文档属于哪个分片的呢？当你创建一个新文档，它是如何知道是应该存储在分片1还是分片2上的呢？</p>
+<p>进程不能是随机的，因为我们将来要检索文档。</p>
+<p>算法决定：</p>
+<p>shard = hash(routing) % number_of_primary_shards</p>
+<p>routing值是一个任意字符串，它默认是_id但也可以自定义。</p>
+<p>为什么主分片的数量只能在创建索引时定义且不能修改？</p>
+<p>如果主分片的数量在未来改变了，所有先前的路由值就失效了，文档也就永远找不到了。</p>
+<p>所有的文档API（get、index、delete、bulk、update、mget）都接收一个routing参数，它用来自定义文档到分片的映射。自定义路由值可以确保所有相关文档——例如属于同一个人的文档——被保存在同一分片上。</p>
+<h4 id="3-4-2、操作数据节点工作流程"><a href="#3-4-2、操作数据节点工作流程" class="headerlink" title="3.4.2、操作数据节点工作流程"></a>3.4.2、操作数据节点工作流程</h4><p>每个节点都有能力处理任意请求。每个节点都知道任意文档所在的节点，所以也可以将请求转发到需要的节点。</p>
+<p>新建、索引和删除请求都是写(write)操作，它们必须在主分片上成功完成才能复制到相关的复制分片上。</p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image050.png" alt="IMG_256"></p>
+<ol>
+<li>客户端给Node 1发送新建、索引或删除请求。</li>
+<li>节点使用文档的_id确定文档属于分片0。它转发请求到Node 3，分片0位于这个节点上。</li>
+<li>Node 3在主分片上执行请求，如果成功，它转发请求到相应的位于Node 1和Node 2的复制节点上。当所有的复制节点报告成功，Node 3报告成功到请求的节点，请求的节点再报告给客户端。</li>
+</ol>
+<p><strong>replication</strong></p>
+<p>复制默认的值是sync。这将导致主分片得到复制分片的成功响应后才返回。</p>
+<p>如果你设置replication为async，请求在主分片上被执行后就会返回给客户端。它依旧会转发请求给复制节点，但你将不知道复制节点成功与否。</p>
+<p>上面的这个选项不建议使用。默认的sync复制允许Elasticsearch强制反馈传输。async复制可能会因为在不等待其它分片就绪的情况下发送过多的请求而使Elasticsearch过载。</p>
+<h4 id="3-4-3、检索流程"><a href="#3-4-3、检索流程" class="headerlink" title="3.4.3、检索流程"></a>3.4.3、检索流程</h4><p>文档能够从主分片或任意一个复制分片被检索。</p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image052.png" alt="IMG_256"></p>
+<ol>
+<li>客户端给Node 1发送get请求。</li>
+<li>节点使用文档的_id确定文档属于分片0。分片0对应的复制分片在三个节点上都有。此时，它转发请求到Node 2。</li>
+<li>Node 2返回文档(document)给Node 1然后返回给客户端。</li>
+</ol>
+<p>对于读请求，为了平衡负载，请求节点会为每个请求选择不同的分片——它会循环所有分片副本。</p>
+<p>可能的情况是，一个被索引的文档已经存在于主分片上却还没来得及同步到复制分片上。这时复制分片会报告文档未找到，主分片会成功返回文档。一旦索引请求成功返回给用户，文档则在主分片和复制分片都是可用的。</p>
+<h2 id="四-安装kibana"><a href="#四-安装kibana" class="headerlink" title="四 安装kibana"></a>四 安装kibana</h2><p>拷贝kibana-5.6.4-linux-x86_64.tar 到/opt下</p>
+<p>解压缩</p>
+<p>进入kibana主目录的config目录下</p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image054.png" alt="img"></p>
+<p>vim  kibana.yml</p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image056.png" alt="img"></p>
+<p>启动</p>
+<p>  在 kibana主目录bin目录下执行</p>
+<p>nohup  ./kibana  &amp;</p>
+<p>然后ctrl+c退出</p>
+<p>执行ps -ef </p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image058.jpg" alt="img"></p>
+<p>如上图,1757号进程就是kibana的进程</p>
+<p>用浏览器打开</p>
+<p><a href="http://192.168.xx.xx:5601/">http://192.168.xx.xx:5601/</a></p>
+<p><img src="file:///C:/Users/jiatp/AppData/Local/Temp/msohtmlclip1/01/clip_image060.png" alt="img"></p>
+<p>点击左边菜单DevTools </p>
+<p>在Console中 </p>
+<p>执行 get _cluster/health    </p>
+<p>右边的结果中，status为yellow或者green。</p>
+<p>表示es启动正常，并且与kibana连接正常。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-03-01T13:46:12.000Z">2018-03-01</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    a few seconds 读完 (大约 1 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2018/03/01/%E5%85%B3%E4%BA%8E%E6%88%91/">关于我</a>
+            
+        </h1>
+        <div class="content">
+            <p>me </p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="" src="/images/logo.jpg" alt="jiatp">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        jiatp
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        不积跬步无以至千里
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>兰州</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <a href="/archives">
+                        <p class="title has-text-weight-normal">
+                            3
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <a href="/categories">
+                        <p class="title has-text-weight-normal">
+                            2
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <a href="/tags">
+                        <p class="title has-text-weight-normal">
+                            2
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://weibo.com/u/6135645258" target="_blank" rel="noopener">
+                关注我</a>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener"
+                title="Github" href="https://github.com/jiatp">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener"
+                title="Weibo" href="https://weibo.com/u/6135645258">
+                
+                <i class="fab fa-weibo"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener"
+                title="Email" href="https://www.zhihu.com/people/gua-feng-de-tian-c-29">
+                
+                <i class="fab fa-zhihu"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://blog.csdn.net/jatpen" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">CSDN</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">blog.csdn.net</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/elasticsearch/">
+            <span class="level-start">
+                <span class="level-item">elasticsearch</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/springboot/">
+            <span class="level-start">
+                <span class="level-item">springboot</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a>
+    </div>
+</div>
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+            <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/02/24/springboot/springboot%E6%95%B4%E5%90%88redis/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="springboot整合redis">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-23T16:00:00.000Z">2020-02-24</time></div>
+                    <a href="/2020/02/24/springboot/springboot%E6%95%B4%E5%90%88redis/" class="title has-link-black-ter is-size-6 has-text-weight-normal">springboot整合redis</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/springboot/">springboot</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/02/23/elasticsearch/elasticsearch/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="elasticsearch全文搜索">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-23T13:46:12.000Z">2020-02-23</time></div>
+                    <a href="/2020/02/23/elasticsearch/elasticsearch/" class="title has-link-black-ter is-size-6 has-text-weight-normal">elasticsearch全文搜索</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/elasticsearch/">elasticsearch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/03/01/%E5%85%B3%E4%BA%8E%E6%88%91/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="关于我">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-03-01T13:46:12.000Z">2018-03-01</time></div>
+                    <a href="/2018/03/01/%E5%85%B3%E4%BA%8E%E6%88%91/" class="title has-link-black-ter is-size-6 has-text-weight-normal">关于我</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">February 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/java/">
+                        <span class="tag">java</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/springboot/">
+                        <span class="tag">springboot</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/02/24/springboot/springboot%E6%95%B4%E5%90%88redis/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="springboot整合redis">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-23T16:00:00.000Z">2020-02-24</time></div>
+                    <a href="/2020/02/24/springboot/springboot%E6%95%B4%E5%90%88redis/" class="title has-link-black-ter is-size-6 has-text-weight-normal">springboot整合redis</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/springboot/">springboot</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/02/23/elasticsearch/elasticsearch/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="elasticsearch全文搜索">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-23T13:46:12.000Z">2020-02-23</time></div>
+                    <a href="/2020/02/23/elasticsearch/elasticsearch/" class="title has-link-black-ter is-size-6 has-text-weight-normal">elasticsearch全文搜索</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/elasticsearch/">elasticsearch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/03/01/%E5%85%B3%E4%BA%8E%E6%88%91/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="关于我">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-03-01T13:46:12.000Z">2018-03-01</time></div>
+                    <a href="/2018/03/01/%E5%85%B3%E4%BA%8E%E6%88%91/" class="title has-link-black-ter is-size-6 has-text-weight-normal">关于我</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">February 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/java/">
+                        <span class="tag">java</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/springboot/">
+                        <span class="tag">springboot</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/head.jpg" alt="Hexo" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 &nbsp;
+                Powered by jiatp
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="view on GitHub" href="https://github.com/jiatp">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-Hans");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
